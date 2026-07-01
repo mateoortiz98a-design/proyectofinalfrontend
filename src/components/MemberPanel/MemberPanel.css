@@ -1,0 +1,193 @@
+.member-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.member-panel__header {
+    margin-bottom: 20px;
+}
+
+.member-panel__header h2 {
+    margin: 0 0 4px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1d1c1d;
+}
+
+.member-panel__header p {
+    margin: 0;
+    color: #868686;
+    font-size: 0.85rem;
+}
+
+.member-panel__invite {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.member-panel__invite-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.member-panel__invite-input:focus {
+    border-color: #3f0e40;
+}
+
+.member-panel__invite-select {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+}
+
+.member-panel__invite-btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #3f0e40;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.member-panel__invite-btn:hover {
+    background: #5a1e5c;
+}
+
+.member-panel__list-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #868686;
+    margin: 0 0 12px 0;
+}
+
+.member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.member-card__info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.member-card__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #3f0e40;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.member-card__name {
+    margin: 0 0 2px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1d1c1d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.member-card__email {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #868686;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.member-card__actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.member-card__select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 0.82rem;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+}
+
+.member-card__delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+    color: #e01e5a;
+}
+
+.member-card__delete-btn:hover {
+    background: rgba(224, 30, 90, 0.1);
+}
+
+@media (max-width: 768px) {
+    .member-panel {
+        padding: 16px;
+        padding-top: 64px;
+    }
+
+    .member-panel__invite {
+        flex-direction: column;
+    }
+
+    .member-panel__invite-input {
+        min-width: unset;
+    }
+
+    .member-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .member-card__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

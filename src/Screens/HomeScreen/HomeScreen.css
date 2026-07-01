@@ -1,0 +1,180 @@
+.home-screen {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background: #fff;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.home-screen__main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.home-screen__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #868686;
+    gap: 12px;
+    text-align: center;
+    padding: 24px;
+}
+
+.home-screen__placeholder-icon {
+    font-size: 3.5rem;
+}
+
+.home-screen__placeholder h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #1d1c1d;
+}
+
+.home-screen__placeholder p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.25);
+}
+
+/* Shared message bubble styles used in ChatPanel and PrivateChatPanel */
+.message-bubble {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    transition: background 0.15s;
+}
+
+.message-bubble:hover {
+    background: #f0f0f0;
+}
+
+.message-bubble__content {
+    flex: 1;
+}
+
+.message-bubble__text {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+    color: #1d1c1d;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.message-bubble__time {
+    font-size: 0.75rem;
+    color: #868686;
+}
+
+.message-bubble__actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.message-bubble:hover .message-bubble__actions {
+    opacity: 1;
+}
+
+.message-bubble__btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+}
+
+.message-bubble__btn:hover {
+    background: rgba(0,0,0,0.08);
+}
+
+.message-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.message-edit__input {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.message-edit__input:focus {
+    border-color: #3f0e40;
+}
+
+.message-edit__actions {
+    display: flex;
+    gap: 6px;
+}
+
+.message-edit__btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    background: #3f0e40;
+    color: #fff;
+    transition: background 0.2s;
+}
+
+.message-edit__btn:hover {
+    background: #5a1e5c;
+}
+
+.message-edit__btn--cancel {
+    background: #e8e8e8;
+    color: #1d1c1d;
+}
+
+.message-edit__btn--cancel:hover {
+    background: #d0d0d0;
+}
+
+@media (max-width: 768px) {
+    .home-screen__main {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-screen__placeholder-icon {
+        font-size: 2.5rem;
+    }
+}

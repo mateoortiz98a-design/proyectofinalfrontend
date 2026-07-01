@@ -1,0 +1,318 @@
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { getWorkspaces, createWorkspace, deleteWorkspace, updateWorkspace } from '../../services/workspaceService'
+import { getChatsByWorkspace, createChat, deleteChat } from '../../services/chatService'
+import { getMessages, sendMessage, deleteMessage, updateMessage } from '../../services/messageService'
+import { getMembers, inviteUser, removeMember, updateMemberRole } from '../../services/memberService'
+import { getContacts, getPendingRequests, sendContactRequest, respondRequest, deleteContact } from '../../services/contactService'
+import { getMyPrivateChats, createPrivateChat, deletePrivateChat, getPrivateMessages, sendPrivateMessage, deletePrivateMessage, updatePrivateMessage } from '../../services/privateChatService'
+import { logout } from '../../services/authService'
+
+import Sidebar from '../../components/Sidebar/Sidebar'
+import ChatPanel from '../../components/ChatPanel/ChatPanel'
+import PrivateChatPanel from '../../components/PrivateChatPanel/PrivateChatPanel'
+import MemberPanel from '../../components/MemberPanel/MemberPanel'
+import ContactPanel from '../../components/ContactPanel/ContactPanel'
+
+import './HomeScreen.css'
+
+export const HomeScreen = () => {
+
+    const navigate = useNavigate()
+
+    const [workspaces, setWorkspaces] = useState([])
+    const [selectedWorkspace, setSelectedWorkspace] = useState(null)
+    const [chats, setChats] = useState([])
+    const [selectedChat, setSelectedChat] = useState(null)
+    const [messages, setMessages] = useState([])
+    const [members, setMembers] = useState([])
+    const [contacts, setContacts] = useState([])
+    const [pendingRequests, setPendingRequests] = useState([])
+    const [privateChats, setPrivateChats] = useState([])
+    const [selectedPrivateChat, setSelectedPrivateChat] = useState(null)
+    const [privateMessages, setPrivateMessages] = useState([])
+
+    const [showMembers, setShowMembers] = useState(false)
+    const [showContacts, setShowContacts] = useState(false)
+
+    useEffect(() => {
+        cargarWorkspaces()
+        cargarContactos()
+        cargarChatsPrivados()
+    }, [])
+
+    useEffect(() => {
+        if (selectedWorkspace) {
+            cargarChats(selectedWorkspace.workspace_id)
+            cargarMiembros(selectedWorkspace.workspace_id)
+            setSelectedChat(null)
+            setMessages([])
+            setShowMembers(false)
+            setShowContacts(false)
+            setSelectedPrivateChat(null)
+        }
+    }, [selectedWorkspace])
+
+    useEffect(() => {
+        if (selectedChat) cargarMensajes(selectedChat._id)
+    }, [selectedChat])
+
+    useEffect(() => {
+        if (selectedPrivateChat) cargarMensajesPrivados(selectedPrivateChat._id)
+    }, [selectedPrivateChat])
+
+    async function cargarWorkspaces() {
+        const response = await getWorkspaces()
+        if (response.ok) setWorkspaces(response.data.workspaces)
+    }
+
+    async function cargarChats(workspace_id) {
+        const response = await getChatsByWorkspace(workspace_id)
+        if (response.ok) setChats(response.chats)
+    }
+
+    async function cargarMensajes(chat_id) {
+        const response = await getMessages(chat_id)
+        if (response.ok) setMessages(response.messages)
+    }
+
+    async function cargarMiembros(workspace_id) {
+        const response = await getMembers(workspace_id)
+        if (response.ok) setMembers(response.data.members)
+    }
+
+    async function cargarContactos() {
+        const response = await getContacts()
+        console.log("CONTACTOS", response)
+        if (response.ok) setContacts(response.data.contacts)
+        const pending = await getPendingRequests()
+    console.log("PENDIENTES", pending)
+        if (pending.ok) setPendingRequests(pending.data.requests)
+    }
+
+    async function cargarChatsPrivados() {
+        const response = await getMyPrivateChats()
+        if (response.ok) setPrivateChats(response.chats)
+    }
+
+    async function cargarMensajesPrivados(chat_id) {
+        const response = await getPrivateMessages(chat_id)
+        if (response.ok) setPrivateMessages(response.messages)
+    }
+
+    // Workspace handlers
+    async function handleCrearWorkspace(nombre) {
+        const response = await createWorkspace(nombre)
+        if (response.ok) cargarWorkspaces()
+    }
+
+    async function handleEliminarWorkspace(workspace_id) {
+        const response = await deleteWorkspace(workspace_id)
+        if (response.ok) {
+            if (selectedWorkspace?.workspace_id === workspace_id) {
+                setSelectedWorkspace(null); setChats([]); setMessages([])
+            }
+            cargarWorkspaces()
+        }
+    }
+
+    async function handleEditarWorkspace(ws, nuevoNombre) {
+        const response = await updateWorkspace(ws.workspace_id, nuevoNombre)
+        if (response.ok) cargarWorkspaces()
+    }
+
+    // Chat handlers
+    async function handleCrearChat(nombre) {
+        const response = await createChat(selectedWorkspace.workspace_id, nombre)
+        if (response.ok) cargarChats(selectedWorkspace.workspace_id)
+    }
+
+    async function handleEliminarChat(chat_id) {
+        const response = await deleteChat(chat_id)
+        if (response.ok) {
+            if (selectedChat?._id === chat_id) { setSelectedChat(null); setMessages([]) }
+            cargarChats(selectedWorkspace.workspace_id)
+        }
+    }
+
+    // Message handlers
+    async function handleEnviarMensaje(mensaje) {
+        const response = await sendMessage(selectedChat._id, mensaje)
+        if (response.ok) cargarMensajes(selectedChat._id)
+    }
+
+    async function handleEliminarMensaje(message_id) {
+        const response = await deleteMessage(message_id)
+        if (response.ok) cargarMensajes(selectedChat._id)
+    }
+
+    async function handleEditarMensaje(message_id, texto) {
+        const response = await updateMessage(message_id, texto)
+        if (response.ok) cargarMensajes(selectedChat._id)
+    }
+
+    // Member handlers
+    async function handleInvitarUsuario(email, rol) {
+        const response = await inviteUser(selectedWorkspace.workspace_id, email, rol)
+        if (response.ok) alert('Invitación enviada!')
+        else alert(response.message)
+    }
+
+    async function handleEliminarMiembro(member_id) {
+        const response = await removeMember(selectedWorkspace.workspace_id, member_id)
+        if (response.ok) cargarMiembros(selectedWorkspace.workspace_id)
+    }
+
+    async function handleCambiarRol(member_id, nuevoRol) {
+        const response = await updateMemberRole(selectedWorkspace.workspace_id, member_id, nuevoRol)
+        if (response.ok) cargarMiembros(selectedWorkspace.workspace_id)
+    }
+
+    // Contact handlers
+    async function handleEnviarSolicitud(email) {
+        const response = await sendContactRequest(email)
+        if (response.ok) alert('Solicitud enviada!')
+        else alert(response.message)
+    }
+
+    async function handleResponderSolicitud(contact_id, decision) {
+        const response = await respondRequest(contact_id, decision)
+        if (response.ok) cargarContactos()
+    }
+
+    async function handleEliminarContacto(contact_id) {
+        const response = await deleteContact(contact_id)
+        if (response.ok) cargarContactos()
+    }
+
+    async function handleIniciarChatPrivado(user_id) {
+        const response = await createPrivateChat(user_id)
+        if (response.ok) {
+            await cargarChatsPrivados()
+            setSelectedPrivateChat(response.chat)
+            setShowContacts(false)
+            setShowMembers(false)
+            setSelectedChat(null)
+        } else {
+            alert(response.message)
+        }
+    }
+
+    // Private chat handlers
+    async function handleEliminarChatPrivado(chat_id) {
+        const response = await deletePrivateChat(chat_id)
+        if (response.ok) {
+            if (selectedPrivateChat?._id === chat_id) { setSelectedPrivateChat(null); setPrivateMessages([]) }
+            cargarChatsPrivados()
+        }
+    }
+
+    async function handleEnviarMensajePrivado(mensaje) {
+        const response = await sendPrivateMessage(selectedPrivateChat._id, mensaje)
+        if (response.ok) cargarMensajesPrivados(selectedPrivateChat._id)
+    }
+
+    async function handleEliminarMensajePrivado(message_id) {
+        const response = await deletePrivateMessage(message_id)
+        if (response.ok) cargarMensajesPrivados(selectedPrivateChat._id)
+    }
+
+    async function handleEditarMensajePrivado(message_id, texto) {
+        const response = await updatePrivateMessage(message_id, texto)
+        if (response.ok) cargarMensajesPrivados(selectedPrivateChat._id)
+    }
+
+    function handleLogout() {
+        logout()
+        navigate('/login')
+    }
+
+    const renderMain = () => {
+        if (showContacts) {
+            return (
+                <ContactPanel
+                    contacts={contacts}
+                    pendingRequests={pendingRequests}
+                    onSendRequest={handleEnviarSolicitud}
+                    onRespond={handleResponderSolicitud}
+                    onDelete={handleEliminarContacto}
+                    onStartChat={handleIniciarChatPrivado}
+                />
+            )
+        }
+
+        if (showMembers && selectedWorkspace) {
+            return (
+                <MemberPanel
+                    selectedWorkspace={selectedWorkspace}
+                    members={members}
+                    onInvite={handleInvitarUsuario}
+                    onRemove={handleEliminarMiembro}
+                    onChangeRole={handleCambiarRol}
+                />
+            )
+        }
+
+        if (selectedPrivateChat) {
+            return (
+                <PrivateChatPanel
+                    selectedPrivateChat={selectedPrivateChat}
+                    privateMessages={privateMessages}
+                    onSendMessage={handleEnviarMensajePrivado}
+                    onDeleteMessage={handleEliminarMensajePrivado}
+                    onEditMessage={handleEditarMensajePrivado}
+                />
+            )
+        }
+
+        if (selectedChat) {
+            return (
+                <ChatPanel
+                    selectedChat={selectedChat}
+                    messages={messages}
+                    onSendMessage={handleEnviarMensaje}
+                    onDeleteMessage={handleEliminarMensaje}
+                    onEditMessage={handleEditarMensaje}
+                />
+            )
+        }
+
+        return (
+            <div className="home-screen__placeholder">
+                <span className="home-screen__placeholder-icon">👋</span>
+                <h3>{selectedWorkspace ? `Bienvenido a ${selectedWorkspace.workspace_nombre}` : 'Bienvenido'}</h3>
+                <p>{selectedWorkspace ? 'Seleccioná un canal o iniciá un chat directo' : 'Seleccioná un workspace para comenzar'}</p>
+            </div>
+        )
+    }
+
+    return (
+        <div className="home-screen">
+            <Sidebar
+                workspaces={workspaces}
+                selectedWorkspace={selectedWorkspace}
+                onSelectWorkspace={(ws) => { setSelectedWorkspace(ws); setShowContacts(false); setShowMembers(false) }}
+                onCreateWorkspace={handleCrearWorkspace}
+                onDeleteWorkspace={handleEliminarWorkspace}
+                onEditWorkspace={handleEditarWorkspace}
+                chats={chats}
+                selectedChat={selectedChat}
+                onSelectChat={(chat) => { setSelectedChat(chat); setShowMembers(false); setShowContacts(false); setSelectedPrivateChat(null) }}
+                onCreateChat={handleCrearChat}
+                onDeleteChat={handleEliminarChat}
+                privateChats={privateChats}
+                selectedPrivateChat={selectedPrivateChat}
+                onSelectPrivateChat={(chat) => { setSelectedPrivateChat(chat); setShowContacts(false); setShowMembers(false); setSelectedChat(null) }}
+                onDeletePrivateChat={handleEliminarChatPrivado}
+                onShowMembers={() => { setShowMembers(true); setShowContacts(false); setSelectedChat(null); setSelectedPrivateChat(null) }}
+                onShowContacts={() => { setShowContacts(true); setShowMembers(false); setSelectedChat(null); setSelectedPrivateChat(null) }}
+                pendingRequests={pendingRequests}
+                onLogout={handleLogout}
+            />
+
+            <main className="home-screen__main">
+                {renderMain()}
+            </main>
+        </div>
+    )
+}
