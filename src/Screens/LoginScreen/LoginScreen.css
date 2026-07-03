@@ -1,0 +1,129 @@
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f4;
+    padding: 24px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
+
+.login-card__header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-card__logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #3f0e40;
+    margin: 0 0 8px 0;
+}
+
+.login-card__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1d1c1d;
+    margin: 0 0 4px 0;
+}
+
+.login-card__subtitle {
+    color: #868686;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.login-card__error {
+    background: #fef0f0;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+}
+
+.login-card__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.login-card__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login-card__label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1d1c1d;
+}
+
+.login-card__input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-card__input:focus {
+    border-color: #3f0e40;
+}
+
+.login-card__btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #3f0e40;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 4px;
+}
+
+.login-card__btn:hover {
+    background: #5a1e5c;
+}
+
+.login-card__footer {
+    text-align: center;
+    font-size: 0.88rem;
+    color: #868686;
+    margin: 0;
+}
+
+.login-card__link {
+    color: #3f0e40;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-card__link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 28px 20px;
+    }
+}

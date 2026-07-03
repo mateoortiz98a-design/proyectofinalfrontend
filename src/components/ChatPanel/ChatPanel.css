@@ -4,7 +4,7 @@
     flex: 1;
     height: 100vh;
     overflow: hidden;
-    background: #fff;
+    background: #f0f0f0;
 }
 
 .chat-panel__header {
@@ -29,7 +29,7 @@
     padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .chat-panel__empty {
@@ -47,6 +47,8 @@
     flex: 1;
     color: #868686;
     gap: 8px;
+    text-align: center;
+    padding: 24px;
 }
 
 .chat-panel__placeholder-icon {
@@ -54,26 +56,42 @@
 }
 
 .message-bubble {
-    background: #f8f8f8;
-    border-radius: 8px;
-    padding: 10px 14px;
+    max-width: 65%;
+    padding: 8px 12px;
+    border-radius: 12px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-    transition: background 0.15s;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
 }
 
-.message-bubble:hover {
-    background: #f0f0f0;
+.message-bubble--mine {
+    align-self: flex-end;
+    background: #dcf8c6;
+    border-bottom-right-radius: 2px;
+}
+
+.message-bubble--other {
+    align-self: flex-start;
+    background: #fff;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message-bubble__sender {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #3f0e40;
 }
 
 .message-bubble__content {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .message-bubble__text {
-    margin: 0 0 4px 0;
+    margin: 0;
     font-size: 0.95rem;
     color: #1d1c1d;
     line-height: 1.4;
@@ -81,8 +99,9 @@
 }
 
 .message-bubble__time {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #868686;
+    align-self: flex-end;
 }
 
 .message-bubble__actions {
@@ -90,7 +109,6 @@
     gap: 4px;
     opacity: 0;
     transition: opacity 0.15s;
-    flex-shrink: 0;
 }
 
 .message-bubble:hover .message-bubble__actions {
@@ -101,10 +119,9 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 2px 4px;
     border-radius: 4px;
-    font-size: 0.85rem;
-    transition: background 0.15s;
+    font-size: 0.8rem;
 }
 
 .message-bubble__btn:hover {
@@ -115,7 +132,6 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    flex: 1;
 }
 
 .message-edit__input {
@@ -170,17 +186,16 @@
 .chat-panel__input-row {
     display: flex;
     gap: 8px;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .chat-panel__input {
     flex: 1;
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: 24px;
     border: 1px solid #ddd;
     font-size: 0.95rem;
     outline: none;
-    resize: none;
     transition: border-color 0.2s;
 }
 
@@ -190,7 +205,7 @@
 
 .chat-panel__send-btn {
     padding: 10px 18px;
-    border-radius: 8px;
+    border-radius: 24px;
     border: none;
     background: #3f0e40;
     color: #fff;
@@ -210,15 +225,15 @@
         padding-top: 52px;
     }
 
-    .chat-panel__header {
-        padding: 12px 16px;
-    }
-
     .chat-panel__messages {
         padding: 12px 16px;
     }
 
     .chat-panel__input-area {
         padding: 10px 16px 12px;
+    }
+
+    .message-bubble {
+        max-width: 85%;
     }
 }

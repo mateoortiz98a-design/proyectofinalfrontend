@@ -7,19 +7,26 @@ import { getMembers, inviteUser, removeMember, updateMemberRole } from '../../se
 import { getContacts, getPendingRequests, sendContactRequest, respondRequest, deleteContact } from '../../services/contactService'
 import { getMyPrivateChats, createPrivateChat, deletePrivateChat, getPrivateMessages, sendPrivateMessage, deletePrivateMessage, updatePrivateMessage } from '../../services/privateChatService'
 import { logout } from '../../services/authService'
-
+import socket from '../../services/socketService'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import ChatPanel from '../../components/ChatPanel/ChatPanel'
 import PrivateChatPanel from '../../components/PrivateChatPanel/PrivateChatPanel'
 import MemberPanel from '../../components/MemberPanel/MemberPanel'
 import ContactPanel from '../../components/ContactPanel/ContactPanel'
-
 import './HomeScreen.css'
+import NotificationPanel from '../../components/NotificationPanel/NotificationPanel'
+
+function getUserFromToken() {
+    const token = localStorage.getItem('access_token')
+    if (!token) return null
+    const payload = token.split('.')[1]
+    return JSON.parse(atob(payload))
+}
 
 export const HomeScreen = () => {
 
     const navigate = useNavigate()
-
+const [notifications, setNotifications] = useState([])
     const [workspaces, setWorkspaces] = useState([])
     const [selectedWorkspace, setSelectedWorkspace] = useState(null)
     const [chats, setChats] = useState([])
@@ -31,9 +38,57 @@ export const HomeScreen = () => {
     const [privateChats, setPrivateChats] = useState([])
     const [selectedPrivateChat, setSelectedPrivateChat] = useState(null)
     const [privateMessages, setPrivateMessages] = useState([])
-
     const [showMembers, setShowMembers] = useState(false)
     const [showContacts, setShowContacts] = useState(false)
+
+    // Socket — usuario y contactos
+useEffect(() => {
+    const currentUser = getUserFromToken()
+    if (currentUser) {
+        socket.emit('join_user', currentUser.id)
+    }
+    socket.on('new_contact_request', () => cargarContactos())
+    socket.on('contact_request_response', () => cargarContactos())
+    socket.on('workspace_invitation', (invitation) => {
+        setNotifications(prev => [...prev, invitation])
+    })
+    return () => {
+        socket.off('new_contact_request')
+        socket.off('contact_request_response')
+        socket.off('workspace_invitation')
+    }
+}, [])
+
+
+    // Socket — chat de grupo
+    useEffect(() => {
+        if (selectedChat) {
+            socket.emit('join_chat', selectedChat._id)
+            socket.on('new_message', (msg) => setMessages(prev => [...prev, msg]))
+            socket.on('updated_message', (msg) => setMessages(prev => prev.map(m => m._id === msg._id ? msg : m)))
+            socket.on('deleted_message', ({ message_id }) => setMessages(prev => prev.filter(m => m._id !== message_id)))
+            return () => {
+                socket.off('new_message')
+                socket.off('updated_message')
+                socket.off('deleted_message')
+            }
+        }
+    }, [selectedChat])
+
+    // Socket — chat privado
+    useEffect(() => {
+        if (selectedPrivateChat) {
+            socket.emit('join_private_chat', selectedPrivateChat._id)
+            socket.on('new_private_message', (msg) => setPrivateMessages(prev => [...prev, msg]))
+            socket.on('updated_private_message', (msg) => setPrivateMessages(prev => prev.map(m => m._id === msg._id ? msg : m)))
+            socket.on('deleted_private_message', ({ message_id }) => setPrivateMessages(prev => prev.filter(m => m._id !== message_id)))
+            return () => {
+                socket.off('new_private_message')
+                socket.off('updated_private_message')
+                socket.off('deleted_private_message')
+            }
+        }
+    }, [selectedPrivateChat])
 
     useEffect(() => {
         cargarWorkspaces()
@@ -61,6 +116,23 @@ export const HomeScreen = () => {
         if (selectedPrivateChat) cargarMensajesPrivados(selectedPrivateChat._id)
     }, [selectedPrivateChat])
 
+
+    async function handleAceptarInvitacion(notif) {
+    const response = await fetch(
+        `http://localhost:8080/api/workspace/${notif.workspace_id}/invite/ACEPTADO?invitation_token=${notif.invitation_token}`
+    )
+    if (response.ok) {
+        setNotifications(prev => prev.filter(n => n.member_id !== notif.member_id))
+        cargarWorkspaces()
+    }
+}
+
+async function handleRechazarInvitacion(notif) {
+    await fetch(
+        `http://localhost:8080/api/workspace/${notif.workspace_id}/invite/RECHAZADO?invitation_token=${notif.invitation_token}`
+    )
+    setNotifications(prev => prev.filter(n => n.member_id !== notif.member_id))
+}
     async function cargarWorkspaces() {
         const response = await getWorkspaces()
         if (response.ok) setWorkspaces(response.data.workspaces)
@@ -83,10 +155,8 @@ export const HomeScreen = () => {
 
     async function cargarContactos() {
         const response = await getContacts()
-        console.log("CONTACTOS", response)
         if (response.ok) setContacts(response.data.contacts)
         const pending = await getPendingRequests()
-    console.log("PENDIENTES", pending)
         if (pending.ok) setPendingRequests(pending.data.requests)
     }
 
@@ -227,6 +297,10 @@ export const HomeScreen = () => {
         navigate('/login')
     }
 
+    function handleGoToProfile() {
+        navigate('/profile')
+    }
+
     const renderMain = () => {
         if (showContacts) {
             return (
@@ -287,32 +361,65 @@ export const HomeScreen = () => {
     }
 
     return (
-        <div className="home-screen">
-            <Sidebar
-                workspaces={workspaces}
-                selectedWorkspace={selectedWorkspace}
-                onSelectWorkspace={(ws) => { setSelectedWorkspace(ws); setShowContacts(false); setShowMembers(false) }}
-                onCreateWorkspace={handleCrearWorkspace}
-                onDeleteWorkspace={handleEliminarWorkspace}
-                onEditWorkspace={handleEditarWorkspace}
-                chats={chats}
-                selectedChat={selectedChat}
-                onSelectChat={(chat) => { setSelectedChat(chat); setShowMembers(false); setShowContacts(false); setSelectedPrivateChat(null) }}
-                onCreateChat={handleCrearChat}
-                onDeleteChat={handleEliminarChat}
-                privateChats={privateChats}
-                selectedPrivateChat={selectedPrivateChat}
-                onSelectPrivateChat={(chat) => { setSelectedPrivateChat(chat); setShowContacts(false); setShowMembers(false); setSelectedChat(null) }}
-                onDeletePrivateChat={handleEliminarChatPrivado}
-                onShowMembers={() => { setShowMembers(true); setShowContacts(false); setSelectedChat(null); setSelectedPrivateChat(null) }}
-                onShowContacts={() => { setShowContacts(true); setShowMembers(false); setSelectedChat(null); setSelectedPrivateChat(null) }}
-                pendingRequests={pendingRequests}
-                onLogout={handleLogout}
-            />
+    <div className="home-screen">
 
-            <main className="home-screen__main">
-                {renderMain()}
-            </main>
-        </div>
-    )
+        <NotificationPanel
+            notifications={notifications}
+            onAccept={handleAceptarInvitacion}
+            onReject={handleRechazarInvitacion}
+        />
+
+        <Sidebar
+            workspaces={workspaces}
+            selectedWorkspace={selectedWorkspace}
+            onSelectWorkspace={(ws) => {
+                setSelectedWorkspace(ws)
+                setShowContacts(false)
+                setShowMembers(false)
+            }}
+            onCreateWorkspace={handleCrearWorkspace}
+            onDeleteWorkspace={handleEliminarWorkspace}
+            onEditWorkspace={handleEditarWorkspace}
+            chats={chats}
+            selectedChat={selectedChat}
+            onSelectChat={(chat) => {
+                setSelectedChat(chat)
+                setShowMembers(false)
+                setShowContacts(false)
+                setSelectedPrivateChat(null)
+            }}
+            onCreateChat={handleCrearChat}
+            onDeleteChat={handleEliminarChat}
+            privateChats={privateChats}
+            selectedPrivateChat={selectedPrivateChat}
+            onSelectPrivateChat={(chat) => {
+                setSelectedPrivateChat(chat)
+                setShowContacts(false)
+                setShowMembers(false)
+                setSelectedChat(null)
+            }}
+            onDeletePrivateChat={handleEliminarChatPrivado}
+            onShowMembers={() => {
+                setShowMembers(true)
+                setShowContacts(false)
+                setSelectedChat(null)
+                setSelectedPrivateChat(null)
+            }}
+            onShowContacts={() => {
+                setShowContacts(true)
+                setShowMembers(false)
+                setSelectedChat(null)
+                setSelectedPrivateChat(null)
+            }}
+            pendingRequests={pendingRequests}
+            onLogout={handleLogout}
+            onGoToProfile={handleGoToProfile}
+        />
+
+        <main className="home-screen__main">
+            {renderMain()}
+        </main>
+
+    </div>
+)
 }

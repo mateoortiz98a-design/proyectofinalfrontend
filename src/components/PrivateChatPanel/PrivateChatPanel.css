@@ -4,7 +4,7 @@
     flex: 1;
     height: 100vh;
     overflow: hidden;
-    background: #fff;
+    background: #f0f0f0;
 }
 
 .private-chat-panel__header {
@@ -19,7 +19,7 @@
 .private-chat-panel__avatar {
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: 50%;
     background: #3f0e40;
     color: #fff;
     display: flex;
@@ -43,7 +43,7 @@
     padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .private-chat-panel__empty {
@@ -51,6 +51,115 @@
     text-align: center;
     margin-top: 40px;
     font-size: 0.95rem;
+}
+
+.message-bubble {
+    max-width: 65%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+}
+
+.message-bubble--mine {
+    align-self: flex-end;
+    background: #dcf8c6;
+    border-bottom-right-radius: 2px;
+}
+
+.message-bubble--other {
+    align-self: flex-start;
+    background: #fff;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.message-bubble__sender {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #3f0e40;
+}
+
+.message-bubble__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.message-bubble__text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #1d1c1d;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.message-bubble__time {
+    font-size: 0.72rem;
+    color: #868686;
+    align-self: flex-end;
+}
+
+.message-bubble__actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.message-bubble:hover .message-bubble__actions {
+    opacity: 1;
+}
+
+.message-bubble__btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.message-bubble__btn:hover {
+    background: rgba(0,0,0,0.08);
+}
+
+.message-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.message-edit__input {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 0.9rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.message-edit__actions {
+    display: flex;
+    gap: 6px;
+}
+
+.message-edit__btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    background: #3f0e40;
+    color: #fff;
+}
+
+.message-edit__btn--cancel {
+    background: #e8e8e8;
+    color: #1d1c1d;
 }
 
 .private-chat-panel__input-area {
@@ -67,7 +176,7 @@
 .private-chat-panel__input {
     flex: 1;
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: 24px;
     border: 1px solid #ddd;
     font-size: 0.95rem;
     outline: none;
@@ -80,7 +189,7 @@
 
 .private-chat-panel__send-btn {
     padding: 10px 18px;
-    border-radius: 8px;
+    border-radius: 24px;
     border: none;
     background: #3f0e40;
     color: #fff;
@@ -97,5 +206,9 @@
 @media (max-width: 768px) {
     .private-chat-panel {
         padding-top: 52px;
+    }
+
+    .message-bubble {
+        max-width: 85%;
     }
 }

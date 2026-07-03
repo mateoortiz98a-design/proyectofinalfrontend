@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import useForm from '../../hooks/useForm'
 import './Sidebar.css'
 
+function getUserFromToken() {
+    const token = localStorage.getItem('access_token')
+    if (!token) return null
+    const payload = token.split('.')[1]
+    return JSON.parse(atob(payload))
+}
+
 const Sidebar = ({
     workspaces,
     selectedWorkspace,
@@ -21,7 +28,8 @@ const Sidebar = ({
     onShowMembers,
     onShowContacts,
     pendingRequests,
-    onLogout
+    onLogout,
+    onGoToProfile
 }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [editandoWorkspace, setEditandoWorkspace] = useState(null)
@@ -56,7 +64,10 @@ const Sidebar = ({
                 {/* Header */}
                 <div className="sidebar__header">
                     <h2 className="sidebar__title">💬 MiSlack</h2>
-                    <button className="sidebar__logout" onClick={onLogout}>Salir</button>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                        <button className="sidebar__logout" onClick={onGoToProfile}>👤</button>
+                        <button className="sidebar__logout" onClick={onLogout}>Salir</button>
+                    </div>
                 </div>
 
                 {/* Workspaces */}
@@ -141,19 +152,26 @@ const Sidebar = ({
                 <div className="sidebar__section">
                     <p className="sidebar__section-title">@ Mensajes directos</p>
                     {privateChats.length === 0 && <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', margin: '4px 0' }}>Sin chats aún</p>}
-                    {privateChats.map(chat => (
-                        <div
-                            key={chat._id}
-                            className={`sidebar__item ${selectedPrivateChat?._id === chat._id ? 'sidebar__item--active' : ''}`}
-                        >
-                            <span className="sidebar__item-name" onClick={() => { onSelectPrivateChat(chat); closeSidebar() }}>
-                                @ {chat.fk_user1_id?.name || chat.fk_user2_id?.name}
-                            </span>
-                            <div className="sidebar__item-actions">
-                                <button className="sidebar__icon-btn" onClick={() => onDeletePrivateChat(chat._id)}>🗑️</button>
+                    {privateChats.map(chat => {
+                        const currentUser = getUserFromToken()
+                        const nombreContacto = currentUser?.email === chat.fk_user_id?.email
+                            ? chat.fk_user_id2?.name || 'Usuario eliminado'
+                            : chat.fk_user_id?.name || 'Usuario eliminado'
+
+                        return (
+                            <div
+                                key={chat._id}
+                                className={`sidebar__item ${selectedPrivateChat?._id === chat._id ? 'sidebar__item--active' : ''}`}
+                            >
+                                <span className="sidebar__item-name" onClick={() => { onSelectPrivateChat(chat); closeSidebar() }}>
+                                    @ {nombreContacto}
+                                </span>
+                                <div className="sidebar__item-actions">
+                                    <button className="sidebar__icon-btn" onClick={() => onDeletePrivateChat(chat._id)}>🗑️</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
 
                 {/* Contactos */}
