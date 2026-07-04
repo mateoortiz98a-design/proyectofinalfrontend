@@ -1,193 +1,243 @@
 .member-panel {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 24px;
+    background: #f5f7fb;
+    padding: 30px;
     overflow-y: auto;
-    background: #fff;
 }
 
 .member-panel__header {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .member-panel__header h2 {
-    margin: 0 0 4px 0;
-    font-size: 1.2rem;
+    margin: 0;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #1d1c1d;
+    color: #1f2937;
 }
 
 .member-panel__header p {
-    margin: 0;
-    color: #868686;
-    font-size: 0.85rem;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: .95rem;
 }
 
 .member-panel__invite {
     display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: 15px;
+    margin-bottom: 35px;
     flex-wrap: wrap;
 }
 
-.member-panel__invite-input {
-    flex: 1;
-    min-width: 180px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.member-panel__invite-input:focus {
-    border-color: #3f0e40;
-}
-
+.member-panel__invite-input,
 .member-panel__invite-select {
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 0.9rem;
+    flex: 1;
+    min-width: 220px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    background: white;
+    font-size: .95rem;
+    transition: .25s;
     outline: none;
-    background: #fff;
-    cursor: pointer;
+}
+
+.member-panel__invite-input:focus,
+.member-panel__invite-select:focus {
+    border-color: #5865f2;
+    box-shadow: 0 0 0 4px rgba(88,101,242,.15);
 }
 
 .member-panel__invite-btn {
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 13px 24px;
     border: none;
-    background: #3f0e40;
-    color: #fff;
+    border-radius: 12px;
+    background: #5865f2;
+    color: white;
     cursor: pointer;
-    font-size: 0.9rem;
     font-weight: 600;
-    transition: background 0.2s;
-    white-space: nowrap;
+    transition: .25s;
 }
 
 .member-panel__invite-btn:hover {
-    background: #5a1e5c;
+    background: #4752c4;
+    transform: translateY(-2px);
 }
 
 .member-panel__list-title {
-    font-size: 0.8rem;
-    font-weight: 700;
+    margin-bottom: 18px;
+    font-size: .8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #868686;
-    margin: 0 0 12px 0;
+    color: #6b7280;
+    font-weight: 700;
 }
 
 .member-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: #f8f8f8;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 20px;
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.05);
+    transition: .25s;
+}
+
+.member-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,.08);
 }
 
 .member-card__info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
     flex: 1;
     min-width: 0;
 }
 
 .member-card__avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: #3f0e40;
-    color: #fff;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#5865f2,#7c3aed);
+    color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 1rem;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
     flex-shrink: 0;
 }
 
 .member-card__name {
-    margin: 0 0 2px 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #1d1c1d;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-weight: 700;
+    color: #111827;
+    font-size: 1rem;
+    margin-bottom: 4px;
 }
 
 .member-card__email {
-    margin: 0;
-    font-size: 0.78rem;
-    color: #868686;
-    white-space: nowrap;
+    color: #6b7280;
+    font-size: .9rem;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .member-card__actions {
     display: flex;
-    gap: 8px;
     align-items: center;
-    flex-shrink: 0;
+    gap: 10px;
 }
 
 .member-card__select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 0.82rem;
-    outline: none;
-    background: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: white;
     cursor: pointer;
+    transition: .25s;
+}
+
+.member-card__select:focus {
+    border-color: #5865f2;
 }
 
 .member-card__delete-btn {
-    background: transparent;
+    width: 42px;
+    height: 42px;
     border: none;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #dc2626;
     cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-    color: #e01e5a;
+    transition: .25s;
+    font-size: 1rem;
 }
 
 .member-card__delete-btn:hover {
-    background: rgba(224, 30, 90, 0.1);
+    background: #dc2626;
+    color: white;
 }
 
-@media (max-width: 768px) {
-    .member-panel {
-        padding: 16px;
-        padding-top: 64px;
-    }
+/* ================= RESPONSIVE ================= */
 
-    .member-panel__invite {
-        flex-direction: column;
-    }
+@media (max-width:900px){
 
-    .member-panel__invite-input {
-        min-width: unset;
-    }
+.member-panel{
+    padding:22px;
+}
 
-    .member-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.member-panel__invite{
+    flex-direction:column;
+}
 
-    .member-card__actions {
-        width: 100%;
-        justify-content: flex-end;
-    }
+.member-panel__invite-input,
+.member-panel__invite-select,
+.member-panel__invite-btn{
+    width:100%;
+}
+
+}
+
+@media (max-width:768px){
+
+.member-panel{
+    padding:18px;
+}
+
+.member-card{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.member-card__actions{
+    width:100%;
+    justify-content:space-between;
+}
+
+.member-card__select{
+    flex:1;
+}
+
+}
+
+@media (max-width:480px){
+
+.member-panel{
+    padding:15px;
+}
+
+.member-panel__header h2{
+    font-size:1.45rem;
+}
+
+.member-card{
+    padding:15px;
+}
+
+.member-card__avatar{
+    width:48px;
+    height:48px;
+}
+
+.member-card__actions{
+    flex-direction:column;
+    width:100%;
+}
+
+.member-card__select,
+.member-card__delete-btn{
+    width:100%;
+}
+
+.member-card__delete-btn{
+    height:45px;
+}
+
 }
