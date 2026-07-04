@@ -60,6 +60,7 @@ export const HomeScreen = () => {
         }
     }, [])
 
+
     // Socket — chat de grupo
     useEffect(() => {
         if (selectedChat) {
@@ -116,6 +117,7 @@ export const HomeScreen = () => {
         if (selectedPrivateChat) cargarMensajesPrivados(selectedPrivateChat._id)
     }, [selectedPrivateChat])
 
+
     async function handleAceptarInvitacion(notif) {
         const response = await fetch(
             `${BASE_URL}/api/workspace/${notif.workspace_id}/invite/ACEPTADO?invitation_token=${notif.invitation_token}`
@@ -132,7 +134,6 @@ export const HomeScreen = () => {
         )
         setNotifications(prev => prev.filter(n => n.member_id !== notif.member_id))
     }
-
     async function cargarWorkspaces() {
         const response = await getWorkspaces()
         if (response.ok) setWorkspaces(response.data.workspaces)
@@ -155,9 +156,21 @@ export const HomeScreen = () => {
 
     async function cargarContactos() {
         const response = await getContacts()
-        if (response.ok) setContacts(response.data.contacts)
+        if (response.ok && response.data?.contacts) {
+            // Filtrar para ignorar contactos rotos donde fk_sender_id venga null
+            const contactosValidos = response.data.contacts.filter(
+                c => c.fk_sender_id !== null && c.fk_sender_id !== undefined
+            )
+            setContacts(contactosValidos)
+        }
         const pending = await getPendingRequests()
-        if (pending.ok) setPendingRequests(pending.data.requests)
+        if (pending.ok && pending.data?.requests) {
+            // Hacemos lo mismo con las solicitudes pendientes
+            const solicitudesValidas = pending.data.requests.filter(
+                r => r.fk_sender_id !== null && r.fk_sender_id !== undefined
+            )
+            setPendingRequests(solicitudesValidas)
+        }
     }
 
     async function cargarChatsPrivados() {
@@ -205,7 +218,7 @@ export const HomeScreen = () => {
         }
     }
 
-    // Message handlers (Grupo)
+    // Message handlers
     async function handleEnviarMensaje(mensaje) {
         const response = await sendMessage(selectedChat._id, mensaje)
         if (response.ok) cargarMensajes(selectedChat._id)
@@ -213,16 +226,12 @@ export const HomeScreen = () => {
 
     async function handleEliminarMensaje(message_id) {
         const response = await deleteMessage(message_id)
-        if (response.ok) {
-            setMessages(prev => prev.filter(m => m._id !== message_id))
-        }
+        if (response.ok) cargarMensajes(selectedChat._id)
     }
 
     async function handleEditarMensaje(message_id, texto) {
         const response = await updateMessage(message_id, texto)
-        if (response.ok) {
-            setMessages(prev => prev.map(m => m._id === message_id ? { ...m, mensaje: texto } : m))
-        }
+        if (response.ok) cargarMensajes(selectedChat._id)
     }
 
     // Member handlers
@@ -288,16 +297,12 @@ export const HomeScreen = () => {
 
     async function handleEliminarMensajePrivado(message_id) {
         const response = await deletePrivateMessage(message_id)
-        if (response.ok) {
-            setPrivateMessages(prev => prev.filter(m => m._id !== message_id))
-        }
+        if (response.ok) cargarMensajesPrivados(selectedPrivateChat._id)
     }
 
     async function handleEditarMensajePrivado(message_id, texto) {
         const response = await updatePrivateMessage(message_id, texto)
-        if (response.ok) {
-            setPrivateMessages(prev => prev.map(m => m._id === message_id ? { ...m, mensaje: texto } : m))
-        }
+        if (response.ok) cargarMensajesPrivados(selectedPrivateChat._id)
     }
 
     function handleLogout() {
