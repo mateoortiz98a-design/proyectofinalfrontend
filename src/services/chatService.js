@@ -1,14 +1,11 @@
-const BASE_URL = 'http://localhost:8080/api'
+import BASE_URL_ROOT from '../config.js'
+const BASE_URL = `${BASE_URL_ROOT}/api`
 
-function getToken() {
-    return localStorage.getItem('access_token')
-}
+function getToken() { return localStorage.getItem('access_token') }
 
 export async function getChatsByWorkspace(workspace_id) {
     const response = await fetch(`${BASE_URL}/group-chat/workspace/${workspace_id}`, {
-        headers: {
-            'Authorization': `Bearer ${getToken()}`
-        }
+        headers: { 'Authorization': `Bearer ${getToken()}` }
     })
     return await response.json()
 }
@@ -16,10 +13,7 @@ export async function getChatsByWorkspace(workspace_id) {
 export async function createChat(workspace_id, nombre) {
     const response = await fetch(`${BASE_URL}/group-chat/workspace/${workspace_id}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` },
         body: JSON.stringify({ nombre })
     })
     return await response.json()
@@ -28,9 +22,7 @@ export async function createChat(workspace_id, nombre) {
 export async function deleteChat(chat_id) {
     const response = await fetch(`${BASE_URL}/group-chat/${chat_id}`, {
         method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${getToken()}`
-        }
+        headers: { 'Authorization': `Bearer ${getToken()}` }
     })
     return await response.json()
 }

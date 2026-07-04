@@ -1,3 +1,4 @@
+import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import useForm from '../../hooks/useForm'
@@ -22,7 +23,7 @@ export const ResetPasswordScreen = () => {
         }
         setLoading(true)
         try {
-            const response = await fetch('http://localhost:8080/api/auth/reset-password-confirm', {
+            const response = await fetch(`${BASE_URL}/api/auth/reset-password-confirm`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { Link } from 'react-router'
 import useForm from '../../hooks/useForm'
@@ -10,7 +11,7 @@ export const ForgotPasswordScreen = () => {
 
     async function onSubmit(formData) {
         try {
-            const response = await fetch('http://localhost:8080/api/auth/reset-password-request', {
+            const response = await fetch(`${BASE_URL}/api/auth/reset-password-request`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: formData.email })

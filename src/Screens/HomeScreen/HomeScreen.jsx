@@ -1,3 +1,4 @@
+import BASE_URL from '../../config.js'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { getWorkspaces, createWorkspace, deleteWorkspace, updateWorkspace } from '../../services/workspaceService'
@@ -119,7 +120,7 @@ useEffect(() => {
 
     async function handleAceptarInvitacion(notif) {
     const response = await fetch(
-        `http://localhost:8080/api/workspace/${notif.workspace_id}/invite/ACEPTADO?invitation_token=${notif.invitation_token}`
+        `${BASE_URL}/api/workspace/${notif.workspace_id}/invite/ACEPTADO?invitation_token=${notif.invitation_token}`
     )
     if (response.ok) {
         setNotifications(prev => prev.filter(n => n.member_id !== notif.member_id))
@@ -129,7 +130,7 @@ useEffect(() => {
 
 async function handleRechazarInvitacion(notif) {
     await fetch(
-        `http://localhost:8080/api/workspace/${notif.workspace_id}/invite/RECHAZADO?invitation_token=${notif.invitation_token}`
+        `${BASE_URL}/api/workspace/${notif.workspace_id}/invite/RECHAZADO?invitation_token=${notif.invitation_token}`
     )
     setNotifications(prev => prev.filter(n => n.member_id !== notif.member_id))
 }

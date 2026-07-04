@@ -1,3 +1,4 @@
+import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { logout } from '../../services/authService'
@@ -26,7 +27,7 @@ export const ProfileScreen = () => {
     async function handleDeleteAccount() {
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:8080/api/user/${currentUser.id}`, {
+            const response = await fetch(`${BASE_URL}/api/user/${currentUser.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('access_token')}`

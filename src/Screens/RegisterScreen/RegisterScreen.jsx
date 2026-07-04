@@ -1,3 +1,4 @@
+import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import useForm from '../../hooks/useForm'
@@ -16,7 +17,7 @@ export const RegisterScreen = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/auth/register', {
+            const response = await fetch(`${BASE_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
