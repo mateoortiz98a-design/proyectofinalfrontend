@@ -1,16 +1,90 @@
-# React + Vite
+# MiSlack - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web de mensajería en tiempo real tipo Slack, construida con React + Vite.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 18
+- Vite
+- React Router
+- Socket.io Client
+- CSS Modules
 
-## React Compiler
+## Instalación local
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Cloná el repositorio:
+```bash
+git clone https://github.com/mateoortiz98a-design/proyectofinalfrontend.git
+cd proyectofinalfrontend
+```
 
-## Expanding the ESLint configuration
+2. Instalá las dependencias:
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Creá el archivo `.env` en la raíz:
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+4. Iniciá la aplicación:
+```bash
+npm run dev
+```
+
+## URL de producción
+
+https://proyectofinalfrontend-eight.vercel.app
+
+## Credenciales de prueba
+
+MAIL:mateoortiz1998a@gmail.com
+password:666666
+
+mail: mateoortiz98a@gmail.com
+password:666666
+
+## Funcionalidades
+
+- ✅ Registro y login con verificación de email  : estoy teniendo un error de render con el mail en local andababa todo
+- ✅ Recuperación de contraseña
+- ✅ Workspaces (crear, editar, eliminar)
+- ✅ Canales de grupo (crear, eliminar)
+- ✅ Mensajes en tiempo real (enviar, editar, eliminar)
+- ✅ Chats privados entre usuarios
+- ✅ Contactos (solicitar, aceptar, rechazar)
+- ✅ Invitaciones a workspace en tiempo real
+- ✅ Perfil de usuario y eliminación de cuenta
+- ✅ Responsive (mobile, tablet, desktop)
+
+## Estructura del proyecto
+ 
+ src/
+├── components/
+│   ├── Sidebar/
+│   ├── ChatPanel/
+│   ├── PrivateChatPanel/
+│   ├── MemberPanel/
+│   ├── ContactPanel/
+│   └── NotificationPanel/
+├── Screens/
+│   ├── LoginScreen/
+│   ├── RegisterScreen/
+│   ├── HomeScreen/
+│   ├── ProfileScreen/
+│   ├── ForgotPasswordScreen/
+│   └── ResetPasswordScreen/
+├── services/
+│   ├── authService.js
+│   ├── workspaceService.js
+│   ├── chatService.js
+│   ├── messageService.js
+│   ├── memberService.js
+│   ├── contactService.js
+│   ├── privateChatService.js
+│   ├── userService.js
+│   └── socketService.js
+├── hooks/
+│   └── useForm.js
+└── config.js
