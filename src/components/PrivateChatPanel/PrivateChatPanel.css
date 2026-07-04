@@ -1,4 +1,4 @@
-..private-chat-panel{
+.private-chat-panel{
     display:flex;
     flex-direction:column;
     flex:1;
@@ -304,3 +304,4 @@ transform:translateY(0);
     padding:0 18px;
 }
 
+} 
