@@ -66,7 +66,7 @@ const Sidebar = ({
                     <h2 className="sidebar__title">💬 MiSlack</h2>
                     <div style={{ display: 'flex', gap: '6px' }}>
                         <button className="sidebar__logout" onClick={onGoToProfile}>👤</button>
-                        <button className="sidebar__logout" onClick={onLogout}>Salir</button>
+                       
                     </div>
                 </div>
 
