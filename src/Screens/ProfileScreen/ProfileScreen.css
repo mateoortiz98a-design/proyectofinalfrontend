@@ -1,217 +1,222 @@
-.profile-screen{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:30px;
-    background:linear-gradient(135deg,#3f0e40,#611f69,#1264a3);
-    background-size:300% 300%;
-    animation:gradientMove 12s ease infinite;
-    font-family:"Segoe UI",sans-serif;
+/* ==========================================================================
+   👤 PROFILE SCREEN - Corporate Account Settings
+   ========================================================================== */
+
+/* 1. Contenedor de Pantalla Completa Centrado */
+.profile-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    background-color: var(--bg-app, #f8f8f8);
 }
 
-@keyframes gradientMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+/* 2. Tarjeta Principal de Perfil (`profile-card`) */
+.profile-card {
+    background-color: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
 }
 
-.profile-card{
-    width:100%;
-    max-width:460px;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(15px);
-    border-radius:24px;
-    padding:45px;
-    box-shadow:0 25px 60px rgba(0,0,0,.25);
-    animation:fadeUp .45s ease;
+/* 3. Header de Perfil (Avatar + Info Principal) */
+.profile-card__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 24px;
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(30px);
+.profile-card__avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--purple-accent, #4a154b);
+    color: var(--white);
+    font-size: 2.2rem;
+    font-weight: 700;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(74, 21, 75, 0.15);
+    user-select: none;
+}
+
+.profile-card__name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    letter-spacing: -0.4px;
+}
+
+.profile-card__email {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+}
+
+/* 4. Bloque de Feedback de Errores */
+.profile-card__error {
+    background-color: #fce8ee;
+    color: #e01e5a;
+    border: 1px solid #f7b3c6;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 5. Listado de Acciones / Botones */
+.profile-card__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-card__btn {
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+/* Botón Volver al Inicio */
+.profile-card__btn--back {
+    background-color: var(--white);
+    color: var(--text-main);
+    border-color: var(--border-light);
+}
+
+.profile-card__btn--back:hover {
+    background-color: var(--bg-app);
+    border-color: #c5c5c5;
+}
+
+/* Botón Cerrar Sesión */
+.profile-card__btn--logout {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    border-color: var(--border-light);
+}
+
+.profile-card__btn--logout:hover {
+    background-color: #e8e8e8;
+    color: #000;
+}
+
+/* Botón Eliminar Cuenta (Acción Destructiva Inicial y de Confirmación) */
+.profile-card__btn--delete {
+    background-color: transparent;
+    color: #e01e5a;
+    border-color: transparent;
+    margin-top: 8px; /* Separación prudencial de la zona de peligro */
+}
+
+.profile-card__btn--delete:hover {
+    background-color: #fce8ee;
+    border-color: #f7b3c6;
+}
+
+/* Estado Deshabilitado en Carga */
+.profile-card__btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 6. Bloque de Confirmación Crítica (Al hacer clic en eliminar) */
+.profile-card__confirm {
+    background-color: rgba(224, 30, 90, 0.03);
+    border: 1px dashed rgba(224, 30, 90, 0.25);
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 12px;
+    animation: slideDown 0.2s ease-out;
+}
+
+.profile-card__confirm-text {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #333;
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+.profile-card__confirm-text strong {
+    color: #e01e5a;
+    font-weight: 700;
+}
+
+.profile-card__confirm-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Botón Confirmar Eliminación (Adentro del bloque crítico) */
+.profile-card__confirm-actions .profile-card__btn--delete {
+    background-color: #e01e5a;
+    color: var(--white);
+    border-color: #e01e5a;
+    margin-top: 0;
+}
+
+.profile-card__confirm-actions .profile-card__btn--delete:hover {
+    background-color: #b91345;
+}
+
+/* Botón Cancelar Eliminación */
+.profile-card__btn--cancel {
+    background-color: var(--white);
+    color: var(--text-muted);
+    border-color: var(--border-light);
+}
+
+.profile-card__btn--cancel:hover {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+}
+
+/* Pequeña animación de entrada para la sección de confirmación */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
     }
-    to{
-        opacity:1;
-        transform:translateY(0);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-.profile-card__header{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    margin-bottom:35px;
-}
-
-.profile-card__avatar{
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#611f69,#3f0e40,#1264a3);
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2.8rem;
-    font-weight:700;
-    margin-bottom:18px;
-    box-shadow:0 12px 30px rgba(63,14,64,.35);
-}
-
-.profile-card__name{
-    font-size:1.6rem;
-    font-weight:700;
-    color:#1d1c1d;
-    margin-bottom:6px;
-}
-
-.profile-card__email{
-    color:#666;
-    font-size:.95rem;
-}
-
-.profile-card__error{
-    background:#ffe8e8;
-    color:#c62828;
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:20px;
-    text-align:center;
-}
-
-.profile-card__actions{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.profile-card__btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:.95rem;
-    font-weight:700;
-    transition:.25s;
-}
-
-.profile-card__btn:hover{
-    transform:translateY(-2px);
-}
-
-.profile-card__btn--back{
-    background:#f2f2f2;
-    color:#333;
-}
-
-.profile-card__btn--back:hover{
-    background:#e4e4e4;
-}
-
-.profile-card__btn--logout{
-    background:linear-gradient(135deg,#611f69,#3f0e40);
-    color:white;
-    box-shadow:0 10px 22px rgba(63,14,64,.25);
-}
-
-.profile-card__btn--logout:hover{
-    box-shadow:0 16px 30px rgba(63,14,64,.35);
-}
-
-.profile-card__btn--delete{
-    background:#ef4444;
-    color:white;
-}
-
-.profile-card__btn--delete:hover{
-    background:#dc2626;
-}
-
-.profile-card__btn--delete:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-    transform:none;
-}
-
-.profile-card__btn--cancel{
-    background:#f3f4f6;
-    color:#333;
-}
-
-.profile-card__btn--cancel:hover{
-    background:#e5e7eb;
-}
-
-.profile-card__confirm{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-.profile-card__confirm-text{
-    text-align:center;
-    color:#555;
-    line-height:1.6;
-    font-size:.95rem;
-}
-
-.profile-card__confirm-actions{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:768px){
-
-.profile-screen{
-    padding:20px;
-}
-
-.profile-card{
-    padding:35px 28px;
-}
-
-.profile-card__avatar{
-    width:90px;
-    height:90px;
-    font-size:2.4rem;
-}
-
-.profile-card__name{
-    font-size:1.4rem;
-}
-
-}
-
-@media(max-width:480px){
-
-.profile-screen{
-    padding:15px;
-}
-
-.profile-card{
-    padding:28px 20px;
-    border-radius:18px;
-}
-
-.profile-card__avatar{
-    width:80px;
-    height:80px;
-    font-size:2rem;
-}
-
-.profile-card__name{
-    font-size:1.25rem;
-}
-
-.profile-card__btn{
-    padding:14px;
-}
-
+/* ==========================================================================
+   📱 RESPONSIVE - Adaptabilidad para pantallas XS
+   ========================================================================== */
+@media (max-width: 440px) {
+    .profile-card {
+        padding: 24px 16px;
+    }
+    
+    .profile-card__name {
+        font-size: 1.25rem;
+    }
 }

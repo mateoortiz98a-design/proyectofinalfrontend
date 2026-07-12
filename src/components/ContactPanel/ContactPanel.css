@@ -1,292 +1,273 @@
-.contact-panel{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    padding:28px;
-    background:#f5f7fb;
-    overflow-y:auto;
+/* ==========================================================================
+   📋 CONTACT PANEL - Slack Style Networking
+   ========================================================================== */
+
+/* 1. Contenedor Principal */
+.contact-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    padding: 24px;
+    background-color: var(--white);
+    overflow-y: auto;
 }
 
-/* HEADER */
-
-.contact-panel__header{
-    margin-bottom:25px;
+/* 2. Header de la sección */
+.contact-panel__header {
+    margin-bottom: 24px;
 }
 
-.contact-panel__header h2{
-    margin:0;
-    font-size:28px;
-    color:#2d2d2d;
-    font-weight:700;
+.contact-panel__header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.3px;
 }
 
-/* AGREGAR CONTACTO */
-
-.contact-panel__add{
-    display:flex;
-    gap:12px;
-    margin-bottom:35px;
+/* 3. Formulario para Agregar Contacto */
+.contact-panel__add {
+    display: flex;
+    gap: 10px;
+    background-color: var(--bg-app);
+    padding: 14px 16px;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--border-light);
+    margin-bottom: 32px;
 }
 
-.contact-panel__input{
-    flex:1;
-    padding:14px 18px;
-    border:none;
-    border-radius:14px;
-    background:white;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-    outline:none;
-    transition:.25s;
-    font-size:15px;
+.contact-panel__input {
+    flex-grow: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    background-color: var(--white);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.contact-panel__input:focus{
-    box-shadow:0 0 0 3px rgba(124,58,237,.20);
+.contact-panel__input:focus {
+    border-color: var(--purple-brand);
+    box-shadow: 0 0 0 3px rgba(97, 31, 105, 0.08);
 }
 
-.contact-panel__add-btn{
-    padding:14px 24px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#7c3aed,#5b21b6);
-    color:white;
-    cursor:pointer;
-    font-weight:600;
-    transition:.25s;
+.contact-panel__add-btn {
+    background-color: var(--purple-brand);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
 }
 
-.contact-panel__add-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(124,58,237,.30);
+.contact-panel__add-btn:hover {
+    background-color: var(--purple-hover);
 }
 
-/* TITULOS */
-
-.contact-panel__section-title{
-    margin:20px 0 15px;
-    font-size:13px;
-    color:#666;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    font-weight:700;
+/* Subtítulos de Secciones (Pendientes / Mis Contactos) */
+.contact-panel__section-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
 }
 
-.contact-panel__empty{
-    color:#888;
-    font-size:15px;
-    text-align:center;
-    padding:25px;
+/* Bloque contenedor de solicitudes pendientes */
+.contact-panel__pending {
+    margin-bottom: 28px;
+    background-color: rgba(224, 30, 90, 0.02); /* Tono rojizo Slack muy sutil de alerta */
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px dashed rgba(224, 30, 90, 0.15);
 }
 
-/* TARJETA */
-
-.contact-card{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-    box-shadow:0 8px 25px rgba(0,0,0,.06);
-    transition:.25s;
+/* Estado de lista vacía */
+.contact-panel__empty {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    padding: 40px 0;
+    font-style: italic;
 }
 
-.contact-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 15px 35px rgba(0,0,0,.12);
+/* 4. Tarjetas de Contacto e Invitaciones (`contact-card`) */
+.contact-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md, 8px);
+    margin-bottom: 10px;
+    background-color: var(--white);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-.contact-card__info{
-    display:flex;
-    align-items:center;
-    gap:16px;
+.contact-card:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
 }
 
-/* AVATAR */
-
-.contact-card__avatar{
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#5b21b6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:22px;
-    font-weight:bold;
-    flex-shrink:0;
+/* Sección izquierda: Avatar e Info */
+.contact-card__info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0; /* Previene desbordes en textos largos */
 }
 
-/* TEXTO */
-
-.contact-card__name{
-    margin:0;
-    font-size:17px;
-    font-weight:700;
-    color:#222;
+.contact-card__avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--purple-accent, #4a154b);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    user-select: none;
 }
 
-.contact-card__email{
-    margin-top:4px;
-    color:#777;
-    font-size:14px;
+/* El avatar de pendientes toma una identidad distinta */
+.contact-panel__pending .contact-card__avatar {
+    background-color: #e01e5a;
 }
 
-/* BOTONES */
-
-.contact-card__actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.contact-card__name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.contact-card__btn{
-    border:none;
-    padding:10px 16px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:600;
-    transition:.25s;
+.contact-card__email {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* CHAT */
-
-.contact-card__btn--chat{
-    background:#7c3aed;
-    color:white;
+/* 5. Botones de Acción Internos */
+.contact-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
-.contact-card__btn--chat:hover{
-    background:#8b5cf6;
+.contact-card__btn {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* ELIMINAR */
-
-.contact-card__btn--delete{
-    background:#ef4444;
-    color:white;
+/* Botón Iniciar Chat */
+.contact-card__btn--chat {
+    background-color: var(--bg-app);
+    color: var(--purple-brand);
+    border-color: var(--border-light);
 }
 
-.contact-card__btn--delete:hover{
-    background:#dc2626;
+.contact-card__btn--chat:hover {
+    background-color: var(--purple-brand);
+    color: var(--white);
+    border-color: var(--purple-brand);
 }
 
-/* ACEPTAR */
-
-.contact-card__btn--accept{
-    background:#10b981;
-    color:white;
+/* Botón Eliminar Contacto */
+.contact-card__btn--delete {
+    background: transparent;
+    color: var(--text-muted);
 }
 
-.contact-card__btn--accept:hover{
-    background:#059669;
+.contact-card__btn--delete:hover {
+    background-color: #fce8ee;
+    color: #e01e5a;
 }
 
-/* RECHAZAR */
-
-.contact-card__btn--reject{
-    background:#ef4444;
-    color:white;
+/* Botón Aceptar Solicitud */
+.contact-card__btn--accept {
+    background-color: #2bac76;
+    color: var(--white);
 }
 
-.contact-card__btn--reject:hover{
-    background:#dc2626;
+.contact-card__btn--accept:hover {
+    background-color: #249262;
 }
 
-/* SOLICITUDES */
-
-.contact-panel__pending{
-    margin-bottom:35px;
+/* Botón Rechazar Solicitud */
+.contact-card__btn--reject {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    border-color: var(--border-light);
 }
 
-/* SCROLL */
-
-.contact-panel::-webkit-scrollbar{
-    width:8px;
+.contact-card__btn--reject:hover {
+    background-color: #f8f8f8;
+    color: #e01e5a;
+    border-color: #f7b3c6;
 }
 
-.contact-panel::-webkit-scrollbar-thumb{
-    background:#cfcfcf;
-    border-radius:20px;
+.contact-card__btn:active {
+    transform: scale(0.96);
 }
 
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
+/* ==========================================================================
+   📱 RESPONSIVE - Vista móvil fluida
+   ========================================================================== */
+@media (max-width: 650px) {
+    /* El input de agregar contacto ocupa filas verticales */
+    .contact-panel__add {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+    }
 
-@media(max-width:900px){
+    .contact-panel__input,
+    .contact-panel__add-btn {
+        width: 100%;
+    }
 
-.contact-panel{
-    padding:20px;
-}
+    /* Las tarjetas distribuyen las acciones abajo */
+    .contact-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px;
+    }
 
-.contact-panel__add{
-    flex-direction:column;
-}
+    .contact-card__info {
+        width: 100%;
+    }
 
-.contact-panel__add-btn{
-    width:100%;
-}
+    .contact-card__actions {
+        width: 100%;
+        border-top: 1px solid var(--border-light);
+        padding-top: 12px;
+        justify-content: flex-end;
+    }
 
-.contact-card{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:18px;
-}
-
-.contact-card__actions{
-    width:100%;
-}
-
-.contact-card__btn{
-    flex:1;
-}
-
-}
-
-@media(max-width:600px){
-
-.contact-panel{
-    padding:15px;
-}
-
-.contact-panel__header h2{
-    font-size:22px;
-}
-
-.contact-card{
-    padding:15px;
-}
-
-.contact-card__avatar{
-    width:48px;
-    height:48px;
-    font-size:18px;
-}
-
-.contact-card__name{
-    font-size:16px;
-}
-
-.contact-card__email{
-    font-size:13px;
-}
-
-.contact-card__actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    width:100%;
-}
-
-.contact-card__btn{
-    width:100%;
-}
-
-.contact-panel__input{
-    font-size:14px;
-}
-
+    .contact-card__btn {
+        flex-grow: 1;
+        text-align: center;
+        justify-content: center;
+    }
 }

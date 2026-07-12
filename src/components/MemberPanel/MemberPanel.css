@@ -1,243 +1,242 @@
+/* ==========================================================================
+   👥 MEMBER PANEL - Admin Workspace Style
+   ========================================================================== */
+
+/* 1. Contenedor Principal */
 .member-panel {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    background: #f5f7fb;
-    padding: 30px;
+    height: 100vh;
+    width: 100%;
+    padding: 24px;
+    background-color: var(--white);
     overflow-y: auto;
 }
 
+/* 2. Header de la sección */
 .member-panel__header {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 .member-panel__header h2 {
-    margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
 }
 
 .member-panel__header p {
-    margin-top: 6px;
-    color: #6b7280;
-    font-size: .95rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
 }
 
+/* 3. Formulario de Invitación */
 .member-panel__invite {
     display: flex;
-    gap: 15px;
-    margin-bottom: 35px;
-    flex-wrap: wrap;
+    gap: 10px;
+    background-color: var(--bg-app);
+    padding: 16px;
+    border-radius: var(--radius-md, 8px);
+    border: 1px solid var(--border-light);
+    margin-bottom: 28px;
 }
 
-.member-panel__invite-input,
-.member-panel__invite-select {
-    flex: 1;
-    min-width: 220px;
-    padding: 13px 16px;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
-    background: white;
-    font-size: .95rem;
-    transition: .25s;
+.member-panel__invite-input {
+    flex-grow: 2;
+    padding: 10px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.9rem;
     outline: none;
+    background-color: var(--white);
+    transition: border-color 0.2s ease;
+}
+
+.member-panel__invite-select {
+    flex-grow: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: var(--white);
+    outline: none;
+    cursor: pointer;
 }
 
 .member-panel__invite-input:focus,
 .member-panel__invite-select:focus {
-    border-color: #5865f2;
-    box-shadow: 0 0 0 4px rgba(88,101,242,.15);
+    border-color: var(--purple-brand);
 }
 
 .member-panel__invite-btn {
-    padding: 13px 24px;
+    background-color: var(--purple-brand);
+    color: var(--white);
     border: none;
-    border-radius: 12px;
-    background: #5865f2;
-    color: white;
-    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 0.9rem;
     font-weight: 600;
-    transition: .25s;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .member-panel__invite-btn:hover {
-    background: #4752c4;
-    transform: translateY(-2px);
+    background-color: var(--purple-hover);
 }
 
+/* Título intermedio de la lista */
 .member-panel__list-title {
-    margin-bottom: 18px;
-    font-size: .8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #6b7280;
+    font-size: 0.8rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
 }
 
+/* 4. Tarjetas de Miembros de la Lista */
 .member-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    background: white;
-    border-radius: 18px;
-    padding: 18px;
-    margin-bottom: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.05);
-    transition: .25s;
+    padding: 12px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md, 8px);
+    margin-bottom: 8px;
+    background-color: var(--white);
+    transition: box-shadow 0.2s ease;
 }
 
 .member-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(0,0,0,.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* Información del usuario (Avatar + Textos) */
 .member-card__info {
     display: flex;
     align-items: center;
-    gap: 16px;
-    flex: 1;
-    min-width: 0;
+    gap: 12px;
+    min-width: 0; /* Absorbe el estilo inline anterior, vital para truncar textos */
+    flex-grow: 1;
 }
 
 .member-card__avatar {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#5865f2,#7c3aed);
-    color: white;
+    width: 38px;
+    height: 38px;
+    background-color: var(--purple-sidebar, #3f0e40);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 6px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
+    justify-content: center;
     flex-shrink: 0;
+    user-select: none;
 }
 
 .member-card__name {
-    font-weight: 700;
-    color: #111827;
-    font-size: 1rem;
-    margin-bottom: 4px;
-}
-
-.member-card__email {
-    color: #6b7280;
-    font-size: .9rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.member-card__email {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Acciones de la Tarjeta (Select de rol + Borrar) */
 .member-card__actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
 .member-card__select {
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #d1d5db;
-    background: white;
+    padding: 6px 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    outline: none;
     cursor: pointer;
-    transition: .25s;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .member-card__select:focus {
-    border-color: #5865f2;
+    border-color: var(--purple-brand);
+    background-color: var(--white);
 }
 
+/* Botón de eliminar (Basurero) */
 .member-card__delete-btn {
-    width: 42px;
-    height: 42px;
+    background: none;
     border: none;
-    border-radius: 10px;
-    background: #fee2e2;
-    color: #dc2626;
-    cursor: pointer;
-    transition: .25s;
     font-size: 1rem;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
 }
 
 .member-card__delete-btn:hover {
-    background: #dc2626;
-    color: white;
+    background-color: #fce8ee;
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media (max-width:900px){
-
-.member-panel{
-    padding:22px;
+.member-card__delete-btn:active {
+    transform: scale(0.92);
 }
 
-.member-panel__invite{
-    flex-direction:column;
-}
+/* ==========================================================================
+   📱 RESPONSIVE - Adaptabilidad móvil
+   ========================================================================== */
+@media (max-width: 600px) {
+    /* El formulario pasa de horizontal a vertical */
+    .member-panel__invite {
+        flex-direction: column;
+        gap: 8px;
+    }
 
-.member-panel__invite-input,
-.member-panel__invite-select,
-.member-panel__invite-btn{
-    width:100%;
-}
+    .member-panel__invite-input,
+    .member-panel__invite-select,
+    .member-panel__invite-btn {
+        width: 100%;
+    }
 
-}
+    /* La tarjeta de miembro redistribuye sus elementos */
+    .member-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+    }
 
-@media (max-width:768px){
+    .member-card__info {
+        width: 100%;
+    }
 
-.member-panel{
-    padding:18px;
-}
-
-.member-card{
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-.member-card__actions{
-    width:100%;
-    justify-content:space-between;
-}
-
-.member-card__select{
-    flex:1;
-}
-
-}
-
-@media (max-width:480px){
-
-.member-panel{
-    padding:15px;
-}
-
-.member-panel__header h2{
-    font-size:1.45rem;
-}
-
-.member-card{
-    padding:15px;
-}
-
-.member-card__avatar{
-    width:48px;
-    height:48px;
-}
-
-.member-card__actions{
-    flex-direction:column;
-    width:100%;
-}
-
-.member-card__select,
-.member-card__delete-btn{
-    width:100%;
-}
-
-.member-card__delete-btn{
-    height:45px;
-}
-
+    .member-card__actions {
+        width: 100%;
+        justify-content: space-between;
+        border-top: 1px solid var(--border-light);
+        padding-top: 10px;
+    }
+    
+    .member-card__select {
+        flex-grow: 1;
+    }
 }
