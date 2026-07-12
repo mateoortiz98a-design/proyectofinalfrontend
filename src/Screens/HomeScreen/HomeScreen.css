@@ -1,29 +1,31 @@
 /* ==========================================================================
-   🏠 HOME SCREEN - Application Workspace Grid (REFIXED)
+   🏠 HOME SCREEN - Estructura Maestra Definitiva
    ========================================================================== */
 
-/* 1. Contenedor de la Aplicación Global */
+/* 1. Contenedor Base de la App */
 .home-screen {
     display: flex;
     width: 100vw;
     height: 100vh;
     overflow: hidden; 
-    background-color: var(--white, #ffffff);
+    background-color: #ffffff;
     position: relative;
 }
 
 /* 
-   2. Aseguramos el espacio del Sidebar
-   Forzamos a que el sidebar mantenga sus dimensiones pase lo que pase
+   2. Ajuste del Sidebar 
+   Buscamos la clase interna o el elemento que sigue a la notificación
 */
-.home-screen .sidebar {
-    width: 260px; /* O el ancho que tengas asignado en tu diseño de Slack */
-    min-width: 260px;
-    flex-shrink: 0;
-    height: 100%;
+.home-screen > .sidebar, 
+.home-screen > div:not(.home-screen__main):not(.notification-panel) {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    flex-shrink: 0 !important;
+    height: 100% !important;
 }
 
-/* 3. Columna de Contenido Principal Dinámico */
+/* 3. Panel de Contenido Principal (Medio y Derecha) */
 .home-screen__main {
     flex-grow: 1;
     flex-shrink: 1;
@@ -32,10 +34,10 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: var(--bg-app, #f8f8f8); /* Mantenemos el fondo integrado */
+    background-color: #f8f8f8;
 }
 
-/* 4. Pantalla de Bienvenida / Estado Vacío */
+/* 4. Estado de Bienvenida (Placeholder) */
 .home-screen__placeholder {
     display: flex;
     flex-direction: column;
@@ -58,19 +60,19 @@
 .home-screen__placeholder h3 {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--text-main, #1d1c1d);
+    color: #1d1c1d;
     margin-bottom: 6px;
     letter-spacing: -0.3px;
 }
 
 .home-screen__placeholder p {
     font-size: 0.95rem;
-    color: var(--text-muted, #616061);
+    color: #616061;
     max-width: 340px;
     line-height: 1.4;
 }
 
-/* Animación de saludo */
+/* Animación de la mano */
 @keyframes waveHand {
     0%, 100% { transform: rotate(0deg); }
     20% { transform: rotate(-12deg); }
@@ -84,17 +86,19 @@
    ========================================================================== */
 @media (max-width: 768px) {
     .home-screen {
-        flex-direction: column; /* Cambiamos a columna en móviles si es necesario */
+        flex-direction: column;
     }
 
-    .home-screen .sidebar {
-        width: 100%;
-        min-width: 100%;
-        height: auto;
+    .home-screen > .sidebar, 
+    .home-screen > div:not(.home-screen__main):not(.notification-panel) {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
     }
 
     .home-screen__main {
         width: 100%;
-        height: calc(100vh - 60px); /* Ajuste dinámico según el header de tu mobile */
+        height: calc(100vh - 60px);
     }
 }
