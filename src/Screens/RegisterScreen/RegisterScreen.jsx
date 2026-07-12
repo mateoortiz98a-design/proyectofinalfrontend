@@ -9,6 +9,7 @@ export const RegisterScreen = () => {
     const navigate = useNavigate()
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
+    const [emergencyLink, setEmergencyLink] = useState(null) // 🔥 Estado para el link de rescate
 
     async function onSubmit(formData) {
         if (formData.password !== formData.confirmPassword) {
@@ -28,11 +29,17 @@ export const RegisterScreen = () => {
             })
             const data = await response.json()
 
-            if (data.ok) {
+            // Cambié la validación a data.ok o response.ok (según manejes tus respuestas)
+            if (response.ok || data.ok) {
                 setSuccess(true)
                 setError(null)
+                
+                // 🔥 Capturamos el link de emergencia si viene en la respuesta del backend
+                if (data.debugLink) {
+                    setEmergencyLink(data.debugLink)
+                }
             } else {
-                setError(data.message)
+                setError(data.message || 'Error al registrar el usuario')
             }
         } catch {
             setError('Error al conectar con el servidor')
@@ -54,7 +61,35 @@ export const RegisterScreen = () => {
                         Te enviamos un mail de verificación a <strong>{formState.email}</strong>.
                         Revisá tu bandeja y hacé click en el link para activar tu cuenta.
                     </p>
-                    <Link to="/login" className="register-card__btn">Ir al login</Link>
+
+                    {/* 🔥 BOTÓN DE EMERGENCIA: Se muestra sólo si el correo real no pudo salir */}
+                    {emergencyLink && (
+                        <div style={{
+                            marginTop: '15px',
+                            padding: '12px',
+                            backgroundColor: '#fff3cd',
+                            border: '1px solid #ffeba0',
+                            borderRadius: '6px',
+                            textAlign: 'center'
+                        }}>
+                            <p style={{ color: '#856404', fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.4' }}>
+                                ⚠️ <strong>Entorno de pruebas:</strong> Si el correo demora por restricciones del hosting, podés simular la activación haciendo clic acá abajo:
+                            </p>
+                            <a 
+                                href={emergencyLink} 
+                                style={{ 
+                                    color: '#3f0e40', 
+                                    fontWeight: 'bold', 
+                                    textDecoration: 'underline',
+                                    fontSize: '14px' 
+                                }}
+                            >
+                                Activar cuenta directamente ➔
+                            </a>
+                        </div>
+                    )}
+
+                    <Link to="/login" className="register-card__btn" style={{ marginTop: '15px' }}>Ir al login</Link>
                 </div>
             </div>
         )
