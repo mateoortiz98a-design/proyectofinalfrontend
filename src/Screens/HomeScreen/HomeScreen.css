@@ -1,104 +1,94 @@
 /* ==========================================================================
-   🏠 HOME SCREEN - Estructura Maestra Definitiva
+   Contenedor Principal de la Aplicación (Layout General)
    ========================================================================== */
-
-/* 1. Contenedor Base de la App */
 .home-screen {
     display: flex;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
     background-color: #ffffff;
-    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* 
-   2. Ajuste del Sidebar 
-   Buscamos la clase interna o el elemento que sigue a la notificación
-*/
-.home-screen > .sidebar, 
-.home-screen > div:not(.home-screen__main):not(.notification-panel) {
-    width: 260px !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
-    flex-shrink: 0 !important;
-    height: 100% !important;
-}
-
-/* 3. Panel de Contenido Principal (Medio y Derecha) */
+/* Área de contenido principal (Donde se renderizan los Paneles) */
 .home-screen__main {
-    flex-grow: 1;
-    flex-shrink: 1;
-    min-width: 0; 
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow: hidden;
     position: relative;
-    background-color: #f8f8f8;
+    background-color: #ffffff;
 }
 
-/* 4. Estado de Bienvenida (Placeholder) */
+/* ==========================================================================
+   Estado de Bienvenida / Marcador de Posición (Placeholder)
+   ========================================================================== */
 .home-screen__placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
+    flex: 1;
+    height: 100%;
     padding: 32px;
+    background-color: #f8f8f8; /* Gris sutil de fondo */
     text-align: center;
+    box-sizing: border-box;
+    animation: homeFadeIn 0.3s ease-out;
+}
+
+@keyframes homeFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .home-screen__placeholder-icon {
     font-size: 3.5rem;
     margin-bottom: 16px;
-    user-select: none;
-    animation: waveHand 2.5s ease-in-out infinite;
-    transform-origin: 70% 70%;
     display: inline-block;
+    animation: waveHand 1.2s ease-in-out infinite alternate;
+    transform-origin: 70% 70%;
+}
+
+@keyframes waveHand {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(15deg); }
 }
 
 .home-screen__placeholder h3 {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #1d1c1d;
-    margin-bottom: 6px;
-    letter-spacing: -0.3px;
+    color: #1d1c1d; /* Negro Slack */
+    margin: 0 0 8px 0;
 }
 
 .home-screen__placeholder p {
     font-size: 0.95rem;
-    color: #616061;
-    max-width: 340px;
+    color: #616061; /* Gris Slack */
+    margin: 0;
+    max-width: 320px;
     line-height: 1.4;
 }
 
-/* Animación de la mano */
-@keyframes waveHand {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-12deg); }
-    40% { transform: rotate(14deg); }
-    60% { transform: rotate(-8deg); }
-    80% { transform: rotate(10deg); }
-}
-
 /* ==========================================================================
-   📱 RESPONSIVE
+   Estrategia Adaptativa para Teléfonos y Tablets
    ========================================================================== */
 @media (max-width: 768px) {
+    /* En dispositivos móviles pequeños, si el flujo requiere que el Sidebar 
+       ocupe toda la pantalla o se superponga, este contenedor asegura 
+       que el contenido principal mantenga las proporciones adecuadas */
     .home-screen {
-        flex-direction: column;
-    }
-
-    .home-screen > .sidebar, 
-    .home-screen > div:not(.home-screen__main):not(.notification-panel) {
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
+        position: relative;
     }
 
     .home-screen__main {
         width: 100%;
-        height: calc(100vh - 60px);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        /* Deja espacio o interacción si el Sidebar es colapsable por JS o CSS */
+        z-index: 1; 
     }
 }

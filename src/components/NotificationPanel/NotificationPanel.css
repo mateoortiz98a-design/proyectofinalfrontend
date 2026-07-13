@@ -1,156 +1,41 @@
 /* ==========================================================================
-   📨 NOTIFICATION PANEL - Toast & Alert Layout
+   🚨 NOTIFICATION PANEL - Aislado Flotante
    ========================================================================== */
 
-/* 1. Contenedor Flotante (Esquina superior derecha tipo Toast) */
 .notification-panel {
-    position: fixed;
+    position: fixed; /* O absolute, dependiendo si querés que tape toda la pantalla */
     top: 20px;
     right: 20px;
-    z-index: 1000;
+    z-index: 9999; /* Por encima de cualquier sidebar o modal */
+    pointer-events: none; /* Permite clickear lo que está abajo si está transparente */
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    max-width: 350px;
     width: 100%;
-    max-width: 360px;
-    pointer-events: none; /* Permite clicks pasantes fuera de las tarjetas */
 }
 
-/* 2. Tarjeta de Notificación Individual */
+/* Tarjeta individual de notificación interna */
 .notification-card {
-    pointer-events: auto; /* Reactiva los clicks dentro de la tarjeta */
-    background-color: var(--white);
-    border-left: 4px solid var(--purple-brand); /* Borde identificador de la app */
-    border-radius: var(--radius-md, 8px);
-    padding: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 
-                0 2px 4px rgba(0, 0, 0, 0.04);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.notification-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-/* 3. Información del Texto */
-.notification-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.notification-card__title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text-main, #1d1c1d);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.notification-card__text {
-    font-size: 0.85rem;
-    color: var(--text-muted, #616061);
-    line-height: 1.4;
-}
-
-.notification-card__text strong {
-    color: var(--text-main, #1d1c1d);
-    font-weight: 600;
-}
-
-/* 4. Botones de Acción */
-.notification-card__actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-.notification-card__btn {
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 6px 12px;
+    pointer-events: auto; /* Reactiva los clicks para las alertas individuales */
+    background-color: #ffffff;
+    border-left: 4px solid #4a154b; /* Color Slack de ejemplo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 12px 16px;
     border-radius: 6px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 4px;
-    transition: all 0.15s ease;
+    justify-content: space-between;
+    animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Botón Aceptar (Éxito) */
-.notification-card__btn--accept {
-    background-color: #2bac76; /* Verde Slack sutil */
-    color: var(--white, #ffffff);
-}
-
-.notification-card__btn--accept:hover {
-    background-color: #249262;
-    transform: translateY(-1px);
-}
-
-/* Botón Rechazar (Neutro / Peligro Sutil) */
-.notification-card__btn--reject {
-    background-color: var(--bg-app, #f8f8f8);
-    border-color: var(--border-light, #dddddd);
-    color: #e01e5a; /* Rojo/Rosa Slack */
-}
-
-.notification-card__btn--reject:hover {
-    background-color: #fce8ee;
-    border-color: #f7b3c6;
-}
-
-.notification-card__btn:active {
-    transform: scale(0.96);
-}
-
-/* ==========================================================================
-   🎬 ANIMACIONES Y RESPONSIVE
-   ========================================================================== */
-
-/* Animación de entrada con un leve rebote */
-@keyframes slideIn {
+@keyframes slideInRight {
     from {
+        transform: translateX(110%);
         opacity: 0;
-        transform: translateX(40px) scale(0.95);
     }
     to {
+        transform: translateX(0);
         opacity: 1;
-        transform: translateX(0) scale(1);
-    }
-}
-
-/* Adaptación para pantallas de celulares */
-@media (max-width: 480px) {
-    .notification-panel {
-        top: auto;
-        bottom: 20px; /* En móvil queda más cómodo abajo para el pulgar */
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-        padding: 0 16px;
-        max-width: 100%;
-    }
-
-    .notification-card {
-        animation: slideUp 0.3s ease;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }

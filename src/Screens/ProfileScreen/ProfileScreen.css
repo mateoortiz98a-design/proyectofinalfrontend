@@ -1,169 +1,176 @@
 /* ==========================================================================
-   👤 PROFILE SCREEN - Corporate Account Settings
+   Contenedor de la Pantalla de Perfil
    ========================================================================== */
-
-/* 1. Contenedor de Pantalla Completa Centrado */
 .profile-screen {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    padding: 20px;
-    background-color: var(--bg-app, #f8f8f8);
+    width: 100vw;
+    height: 100vh;
+    background-color: #f8f8f8; /* Gris claro de fondo general */
+    padding: 24px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* 2. Tarjeta Principal de Perfil (`profile-card`) */
+/* Tarjeta Central de Perfil */
 .profile-card {
-    background-color: var(--white);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg, 12px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
     width: 100%;
-    max-width: 480px;
+    max-width: 450px;
     padding: 32px;
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    animation: profileFadeIn 0.3s ease-out;
 }
 
-/* 3. Header de Perfil (Avatar + Info Principal) */
+@keyframes profileFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Cabecera de la Tarjeta (Avatar e Información Básica)
+   ========================================================================== */
 .profile-card__header {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin-bottom: 28px;
-    border-bottom: 1px solid var(--border-light);
-    padding-bottom: 24px;
 }
 
+/* Avatar con la Inicial del Usuario */
 .profile-card__avatar {
     width: 80px;
     height: 80px;
-    background-color: var(--purple-accent, #4a154b);
-    color: var(--white);
+    background-color: #611f69; /* Morado Slack corporativo */
+    color: #ffffff;
     font-size: 2.2rem;
     font-weight: 700;
-    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
     margin-bottom: 16px;
-    box-shadow: 0 4px 10px rgba(74, 21, 75, 0.15);
-    user-select: none;
+    box-shadow: 0 2px 6px rgba(97, 31, 105, 0.2);
 }
 
 .profile-card__name {
     font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin-bottom: 4px;
-    letter-spacing: -0.4px;
+    font-weight: 700;
+    color: #1d1c1d;
+    margin: 0 0 4px 0;
 }
 
 .profile-card__email {
-    font-size: 0.92rem;
-    color: var(--text-muted);
+    font-size: 0.95rem;
+    color: #616061;
+    margin: 0;
 }
 
-/* 4. Bloque de Feedback de Errores */
+/* Mensajes de Error */
 .profile-card__error {
-    background-color: #fce8ee;
-    color: #e01e5a;
-    border: 1px solid #f7b3c6;
-    padding: 10px 14px;
+    background-color: #fbebee;
+    color: #d11124;
+    border: 1px solid #f5c2c7;
     border-radius: 6px;
+    padding: 10px 14px;
     font-size: 0.88rem;
-    font-weight: 500;
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* 5. Listado de Acciones / Botones */
+/* ==========================================================================
+   Sección de Acciones y Botones
+   ========================================================================== */
 .profile-card__actions {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+/* Botón Base */
 .profile-card__btn {
     width: 100%;
     padding: 11px 16px;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 600;
     border-radius: 6px;
     border: 1px solid transparent;
     cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
-/* Botón Volver al Inicio */
-.profile-card__btn--back {
-    background-color: var(--white);
-    color: var(--text-main);
-    border-color: var(--border-light);
-}
-
-.profile-card__btn--back:hover {
-    background-color: var(--bg-app);
-    border-color: #c5c5c5;
-}
-
-/* Botón Cerrar Sesión */
-.profile-card__btn--logout {
-    background-color: var(--bg-app);
-    color: var(--text-main);
-    border-color: var(--border-light);
-}
-
-.profile-card__btn--logout:hover {
-    background-color: #e8e8e8;
-    color: #000;
-}
-
-/* Botón Eliminar Cuenta (Acción Destructiva Inicial y de Confirmación) */
-.profile-card__btn--delete {
-    background-color: transparent;
-    color: #e01e5a;
-    border-color: transparent;
-    margin-top: 8px; /* Separación prudencial de la zona de peligro */
-}
-
-.profile-card__btn--delete:hover {
-    background-color: #fce8ee;
-    border-color: #f7b3c6;
-}
-
-/* Estado Deshabilitado en Carga */
 .profile-card__btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-/* 6. Bloque de Confirmación Crítica (Al hacer clic en eliminar) */
+/* Botón Volver */
+.profile-card__btn--back {
+    background-color: transparent;
+    border-color: #cbd5e1;
+    color: #1d1c1d;
+}
+
+.profile-card__btn--back:hover {
+    background-color: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* Botón Cerrar Sesión */
+.profile-card__btn--logout {
+    background-color: #611f69;
+    color: #ffffff;
+}
+
+.profile-card__btn--logout:hover {
+    background-color: #4a154b;
+}
+
+/* Botón Eliminar Cuenta (Peligro) */
+.profile-card__btn--delete {
+    background-color: #fff0f1;
+    color: #e01e5a;
+    border-color: #fbcfe8;
+    margin-top: 8px; /* Separación visual de la zona de peligro */
+}
+
+.profile-card__btn--delete:hover:not(:disabled) {
+    background-color: #e01e5a;
+    color: #ffffff;
+    border-color: #e01e5a;
+}
+
+/* ==========================================================================
+   Contenedor de Confirmación de Borrado
+   ========================================================================== */
 .profile-card__confirm {
-    background-color: rgba(224, 30, 90, 0.03);
-    border: 1px dashed rgba(224, 30, 90, 0.25);
-    padding: 16px;
+    background-color: #fff5f5;
+    border: 1px solid #ffe3e3;
     border-radius: 8px;
-    margin-top: 12px;
-    animation: slideDown 0.2s ease-out;
+    padding: 16px;
+    margin-top: 8px;
 }
 
 .profile-card__confirm-text {
     font-size: 0.88rem;
-    line-height: 1.45;
-    color: #333;
-    margin-bottom: 14px;
+    color: #c92a2a;
+    line-height: 1.4;
+    margin: 0 0 14px 0;
     text-align: center;
 }
 
 .profile-card__confirm-text strong {
-    color: #e01e5a;
     font-weight: 700;
+    text-decoration: underline;
 }
 
 .profile-card__confirm-actions {
@@ -172,51 +179,40 @@
     gap: 8px;
 }
 
-/* Botón Confirmar Eliminación (Adentro del bloque crítico) */
+/* Ajuste específico para el botón de confirmar borrado real */
 .profile-card__confirm-actions .profile-card__btn--delete {
-    background-color: #e01e5a;
-    color: var(--white);
-    border-color: #e01e5a;
     margin-top: 0;
+    background-color: #e01e5a;
+    color: #ffffff;
 }
 
-.profile-card__confirm-actions .profile-card__btn--delete:hover {
-    background-color: #b91345;
+.profile-card__confirm-actions .profile-card__btn--delete:hover:not(:disabled) {
+    background-color: #c11246;
 }
 
-/* Botón Cancelar Eliminación */
+/* Botón Cancelar Borrado */
 .profile-card__btn--cancel {
-    background-color: var(--white);
-    color: var(--text-muted);
-    border-color: var(--border-light);
+    background-color: transparent;
+    border-color: #cbd5e1;
+    color: #616061;
 }
 
 .profile-card__btn--cancel:hover {
-    background-color: var(--bg-app);
-    color: var(--text-main);
-}
-
-/* Pequeña animación de entrada para la sección de confirmación */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    background-color: #f1f5f9;
+    color: #1d1c1d;
 }
 
 /* ==========================================================================
-   📱 RESPONSIVE - Adaptabilidad para pantallas XS
+   Responsividad (Mobile Friendly)
    ========================================================================== */
-@media (max-width: 440px) {
+@media (max-width: 480px) {
     .profile-card {
-        padding: 24px 16px;
+        padding: 20px;
     }
     
-    .profile-card__name {
-        font-size: 1.25rem;
+    .profile-card__avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.9rem;
     }
 }

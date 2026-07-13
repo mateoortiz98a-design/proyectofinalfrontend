@@ -1,155 +1,174 @@
 /* ==========================================================================
-   💬 PRIVATE CHAT PANEL - Premium Layout
+   Variables de Paleta de Color (Sincronizadas con el Layout)
    ========================================================================== */
+:root {
+    --chat-bg: #ffffff;
+    --chat-header-bg: #ffffff;
+    --chat-text-main: #1d1c1d;
+    --chat-text-muted: #616061;
+    --chat-border: #e2e2e2;
+    
+    /* Burbujas de chat */
+    --bubble-mine-bg: #f2e6f5; /* Tono morado muy suave para tus mensajes */
+    --bubble-other-bg: #f4f5f7; /* Gris sutil para los del contacto */
+    
+    /* Acciones y Botones */
+    --purple-primary: #611f69;
+    --purple-hover: #4a154b;
+    --danger-color: #e01e5a;
+}
 
-/* 1. Contenedor Principal del Chat */
+/* ==========================================================================
+   Contenedor Principal del Panel de Chat
+   ========================================================================== */
 .private-chat-panel {
     display: flex;
     flex-direction: column;
+    flex: 1;
     height: 100vh;
-    width: 100%;
-    background-color: var(--white);
-    overflow: hidden;
+    background-color: var(--chat-bg);
+    box-sizing: border-box;
 }
 
-/* 2. Header Superior del Chat */
+/* Header del Chat */
 .private-chat-panel__header {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    border-bottom: 1px solid var(--border-light);
-    background-color: var(--white);
-    min-height: 64px;
+    border-bottom: 1px solid var(--chat-border);
+    background-color: var(--chat-header-bg);
 }
 
 .private-chat-panel__header h2 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--text-main);
-    letter-spacing: -0.2px;
+    color: var(--chat-text-main);
+    margin: 0;
 }
 
-/* Avatar con la inicial del contacto */
+/* Avatar circular con la inicial */
 .private-chat-panel__avatar {
     width: 36px;
     height: 36px;
-    background-color: var(--purple-brand);
-    color: var(--white);
+    background-color: var(--purple-primary);
+    color: #ffffff;
     font-weight: 700;
-    font-size: 0.95rem;
-    border-radius: 8px; /* Cuadrado suavizado tipo Slack */
+    font-size: 1rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
+    text-transform: uppercase;
 }
 
-/* 3. Área de Mensajes (Scrollable) */
+/* ==========================================================================
+   Área de Mensajes (Scrollable)
+   ========================================================================== */
 .private-chat-panel__messages {
-    flex-grow: 1;
-    padding: 24px;
+    flex: 1;
     overflow-y: auto;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background-color: var(--bg-app); /* Fondo gris premium sutil */
+}
+
+/* Scrollbar estilizada */
+.private-chat-panel__messages::-webkit-scrollbar {
+    width: 6px;
+}
+.private-chat-panel__messages::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 /* Estado Vacío */
 .private-chat-panel__empty {
     text-align: center;
-    color: var(--text-muted);
-    font-size: 0.92rem;
-    margin: auto 0;
+    color: var(--chat-text-muted);
+    font-size: 0.95rem;
+    margin-top: 40px;
     font-style: italic;
 }
 
-/* 4. Burbujas de Mensaje */
+/* ==========================================================================
+   Burbujas de Mensaje (Estilo Fluido y Moderno)
+   ========================================================================== */
 .message-bubble {
     display: flex;
     flex-direction: column;
     max-width: 70%;
     position: relative;
-    group: hover;
+    padding: 10px 14px;
+    border-radius: 12px;
+    animation: fadeIn 0.2s ease-in-out;
 }
 
-/* Alineaciones dinámicas según quién mande el mensaje */
-.message-bubble--mine {
-    align-self: flex-end;
-    align-items: flex-end;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.message-bubble--other {
-    align-self: flex-start;
-    align-items: flex-start;
-}
-
-/* Nombre del remitente (solo para otros) */
+/* Identificador del Remitente (Solo para otros) */
 .message-bubble__sender {
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--text-muted);
+    color: var(--purple-primary);
     margin-bottom: 4px;
-    margin-left: 4px;
 }
 
-/* Bloque contenedor del texto + hora */
+/* Contenido interno (Texto + Hora) */
 .message-bubble__content {
-    background-color: var(--white);
-    padding: 12px 16px;
-    border-radius: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     gap: 4px;
-    min-width: 80px;
-}
-
-/* Estilo propio para mis mensajes */
-.message-bubble--mine .message-bubble__content {
-    background-color: var(--purple-brand);
-    color: var(--white);
-    border-bottom-right-radius: 4px; /* Efecto colita de chat */
-}
-
-.message-bubble--other .message-bubble__content {
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 16px;
 }
 
 .message-bubble__text {
-    font-size: 0.95rem;
+    font-size: 0.93rem;
+    color: var(--chat-text-main);
     line-height: 1.4;
     word-break: break-word;
+    margin: 0;
 }
 
 .message-bubble__time {
-    font-size: 0.7rem;
-    color: var(--text-muted);
+    font-size: 0.72rem;
+    color: var(--chat-text-muted);
     align-self: flex-end;
+    margin-top: 2px;
 }
 
-.message-bubble--mine .message-bubble__time {
-    color: rgba(255, 255, 255, 0.7);
+/* Mensajes Propios (Lado Derecho) */
+.message-bubble--mine {
+    align-self: flex-end;
+    background-color: var(--bubble-mine-bg);
+    border-bottom-right-radius: 2px;
 }
 
-/* Acciones flotantes (Editar/Borrar) - Aparecen en Hover */
+/* Mensajes del Contacto (Lado Izquierdo) */
+.message-bubble--other {
+    align-self: flex-start;
+    background-color: var(--bubble-other-bg);
+    border-bottom-left-radius: 2px;
+}
+
+/* Acciones flotantes del mensaje (Editar / Borrar) */
 .message-bubble__actions {
-    display: flex;
-    gap: 4px;
-    background: var(--white);
-    border: 1px solid var(--border-light);
-    padding: 4px;
-    border-radius: 8px;
     position: absolute;
     top: -12px;
     right: 8px;
+    background: #ffffff;
+    border: 1px solid var(--chat-border);
+    border-radius: 20px;
+    padding: 2px 6px;
+    display: flex;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     opacity: 0;
-    box-shadow: var(--shadow-card);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    transform: translateY(4px);
-    z-index: 10;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    transform: translateY(2px);
 }
 
 .message-bubble:hover .message-bubble__actions {
@@ -158,38 +177,36 @@
 }
 
 .message-bubble__btn {
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
+    padding: 2px;
     font-size: 0.85rem;
-    padding: 4px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+    border-radius: 50%;
+    transition: transform 0.1s;
 }
 
 .message-bubble__btn:hover {
-    background-color: var(--bg-app);
+    transform: scale(1.2);
 }
 
-/* 5. Inputs de Edición en caliente */
+/* ==========================================================================
+   Modo Edición del Mensaje Inline
+   ========================================================================== */
 .message-edit {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: var(--white);
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--purple-brand);
-    width: 280px;
+    min-width: 240px;
 }
 
 .message-edit__input {
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--border-light);
+    padding: 6px 10px;
+    border: 1px solid var(--purple-primary);
     border-radius: 6px;
-    font-size: 0.9rem;
     outline: none;
+    font-size: 0.9rem;
 }
 
 .message-edit__actions {
@@ -199,95 +216,103 @@
 }
 
 .message-edit__btn {
-    padding: 6px 12px;
+    background-color: var(--purple-primary);
+    color: #ffffff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
     font-size: 0.8rem;
     font-weight: 600;
-    border-radius: 6px;
-    border: none;
     cursor: pointer;
-    background-color: var(--purple-brand);
-    color: var(--white);
+}
+
+.message-edit__btn:hover {
+    background-color: var(--purple-hover);
 }
 
 .message-edit__btn--cancel {
-    background-color: var(--bg-app);
-    color: var(--text-muted);
+    background-color: #e2e2e2;
+    color: var(--chat-text-main);
 }
 
-/* 6. Barra Inferior de Entrada de Mensaje */
+.message-edit__btn--cancel:hover {
+    background-color: #d5d5d5;
+}
+
+/* ==========================================================================
+   Caja de Entrada de Mensajes (Bottom Input)
+   ========================================================================== */
 .private-chat-panel__input-area {
     padding: 0 24px 24px 24px;
-    background-color: var(--bg-app);
+    background-color: var(--chat-bg);
 }
 
 .private-chat-panel__input-row {
     display: flex;
     align-items: center;
-    background-color: var(--white);
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 6px 6px 6px 16px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #a3a3a3;
+    border-radius: 8px;
+    padding: 4px 8px 4px 12px;
+    background-color: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .private-chat-panel__input-row:focus-within {
-    border-color: var(--purple-brand);
-    box-shadow: 0 0 0 3px rgba(97, 31, 105, 0.1);
+    border-color: var(--purple-primary);
+    box-shadow: 0 0 0 1px var(--purple-primary);
 }
 
 .private-chat-panel__input {
-    flex-grow: 1;
+    flex: 1;
     border: none;
     outline: none;
-    font-size: 0.95rem;
-    color: var(--text-main);
     padding: 8px 0;
+    font-size: 0.95rem;
+    color: var(--chat-text-main);
 }
 
 .private-chat-panel__input::placeholder {
-    color: var(--text-muted);
-    opacity: 0.7;
+    color: #a0a0a0;
 }
 
-/* Botón Enviar Premium */
 .private-chat-panel__send-btn {
-    background-color: var(--purple-brand);
-    color: var(--white);
+    background-color: var(--purple-primary);
+    color: #ffffff;
     border: none;
     padding: 8px 16px;
-    font-size: 0.88rem;
+    border-radius: 6px;
     font-weight: 600;
-    border-radius: 8px;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.15s;
 }
 
 .private-chat-panel__send-btn:hover {
     background-color: var(--purple-hover);
 }
 
-.private-chat-panel__send-btn:active {
-    transform: scale(0.96);
-}
-
 /* ==========================================================================
-   📱 RESPONSIVE - Adaptabilidad móvil
+   Responsive Adaptable sin Rupturas (Mobile & Tablets)
    ========================================================================== */
 @media (max-width: 768px) {
+    /* Agrega un espaciado superior al header para que conviva perfectamente 
+       con el botón flotante (☰) del Sidebar en móviles */
     .private-chat-panel__header {
-        padding: 12px 16px 12px 60px; /* Margen izquierdo para no pisar el botón hamburguesa del sidebar */
+        padding-left: 64px; /* Empuja el título a la derecha para dejarle espacio a la hamburguesa */
+        padding-top: 14px;
+        padding-bottom: 14px;
     }
-
+    
+    /* En pantallas chicas las burbujas pueden expandirse un poco más */
+    .message-bubble {
+        max-width: 85%;
+    }
+    
     .private-chat-panel__messages {
         padding: 16px;
     }
-
-    .message-bubble {
-        max-width: 85%; /* Más ancho en pantallas chicas */
-    }
-
+    
     .private-chat-panel__input-area {
-        padding: 0 12px 12px 12px;
+        padding: 0 16px 16px 16px;
     }
 }

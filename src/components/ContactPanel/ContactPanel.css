@@ -1,167 +1,198 @@
 /* ==========================================================================
-   📋 CONTACT PANEL - Slack Style Networking
+   Variables de Paleta de Color (Sincronizadas con la interfaz)
    ========================================================================== */
-
-/* 1. Contenedor Principal */
-.contact-panel {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    padding: 24px;
-    background-color: var(--white);
-    overflow-y: auto;
+:root {
+    --panel-bg: #ffffff;
+    --text-main: #1d1c1d;
+    --text-muted: #616061;
+    --border-light: #e2e2e2;
+    
+    /* Identidad de Marca */
+    --purple-primary: #611f69;
+    --purple-hover: #4a154b;
+    --purple-light: #f2e6f5;
+    
+    /* Estados y Botones alternativos */
+    --success-color: #2bac76;
+    --success-hover: #eaf6f0;
+    --danger-color: #e01e5a;
+    --danger-hover: #fce8ef;
 }
 
-/* 2. Header de la sección */
+/* ==========================================================================
+   Contenedor Principal del Panel de Contactos
+   ========================================================================== */
+.contact-panel {
+    flex: 1;
+    height: 100vh;
+    background-color: var(--panel-bg);
+    padding: 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollbar sutil */
+.contact-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.contact-panel::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+/* Header del panel */
 .contact-panel__header {
     margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 16px;
 }
 
 .contact-panel__header h2 {
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--text-main);
-    letter-spacing: -0.3px;
+    margin: 0;
 }
 
-/* 3. Formulario para Agregar Contacto */
+/* ==========================================================================
+   Formulario: Agregar Contacto (Fila Superior)
+   ========================================================================== */
 .contact-panel__add {
     display: flex;
-    gap: 10px;
-    background-color: var(--bg-app);
-    padding: 14px 16px;
-    border-radius: var(--radius-md, 8px);
+    gap: 12px;
+    background-color: #f8f8f8;
+    padding: 16px;
+    border-radius: 8px;
     border: 1px solid var(--border-light);
-    margin-bottom: 32px;
+    margin-bottom: 28px;
+    align-items: center;
 }
 
 .contact-panel__input {
-    flex-grow: 1;
-    padding: 10px 14px;
-    border: 1px solid var(--border-light);
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #a3a3a3;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     outline: none;
-    background-color: var(--white);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
 }
 
 .contact-panel__input:focus {
-    border-color: var(--purple-brand);
-    box-shadow: 0 0 0 3px rgba(97, 31, 105, 0.08);
+    border-color: var(--purple-primary);
 }
 
 .contact-panel__add-btn {
-    background-color: var(--purple-brand);
-    color: var(--white);
+    background-color: var(--purple-primary);
+    color: #ffffff;
     border: none;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    padding: 8px 20px;
     border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
     cursor: pointer;
+    transition: background-color 0.15s;
     white-space: nowrap;
-    transition: background-color 0.2s ease;
 }
 
 .contact-panel__add-btn:hover {
     background-color: var(--purple-hover);
 }
 
-/* Subtítulos de Secciones (Pendientes / Mis Contactos) */
-.contact-panel__section-title {
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--text-muted);
-    margin-bottom: 14px;
-}
-
-/* Bloque contenedor de solicitudes pendientes */
+/* Contenedor o bloque de solicitudes pendientes */
 .contact-panel__pending {
     margin-bottom: 28px;
-    background-color: rgba(224, 30, 90, 0.02); /* Tono rojizo Slack muy sutil de alerta */
+    background-color: #fffbfa; /* Un fondo cálido muy sutil para destacar pendientes */
+    border: 1px dashed rgba(224, 30, 90, 0.25);
     padding: 16px;
     border-radius: 8px;
-    border: 1px dashed rgba(224, 30, 90, 0.15);
 }
 
-/* Estado de lista vacía */
-.contact-panel__empty {
-    text-align: center;
+/* Título de las secciones */
+.contact-panel__section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
     color: var(--text-muted);
-    font-size: 0.92rem;
-    padding: 40px 0;
-    font-style: italic;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
 }
 
-/* 4. Tarjetas de Contacto e Invitaciones (`contact-card`) */
+/* Estado Vacío de Contactos */
+.contact-panel__empty {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   Tarjetas de Contacto / Solicitud (Listado)
+   ========================================================================== */
 .contact-card {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 14px 18px;
+    justify-content: space-between;
+    padding: 12px 16px;
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-md, 8px);
+    border-radius: 8px;
     margin-bottom: 10px;
-    background-color: var(--white);
-    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    background-color: #ffffff;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    gap: 16px;
 }
 
 .contact-card:hover {
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-color: #d0d0d0;
 }
 
-/* Sección izquierda: Avatar e Info */
+/* Información del usuario (Avatar + Textos) */
 .contact-card__info {
     display: flex;
     align-items: center;
-    gap: 14px;
-    min-width: 0; /* Previene desbordes en textos largos */
+    gap: 12px;
+    min-width: 0; /* Permite truncar los textos internos en contenedores flex */
+    flex: 1;
 }
 
 .contact-card__avatar {
     width: 40px;
     height: 40px;
-    background-color: var(--purple-accent, #4a154b);
-    color: var(--white);
+    background-color: var(--purple-light);
+    color: var(--purple-primary);
     font-weight: 700;
-    font-size: 1rem;
-    border-radius: 8px;
+    font-size: 1.1rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    user-select: none;
-}
-
-/* El avatar de pendientes toma una identidad distinta */
-.contact-panel__pending .contact-card__avatar {
-    background-color: #e01e5a;
+    flex-shrink: 0; /* Evita que el avatar se deforme en textos gigantes */
 }
 
 .contact-card__name {
-    font-size: 0.95rem;
     font-weight: 600;
+    font-size: 0.95rem;
     color: var(--text-main);
-    margin-bottom: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
 }
 
 .contact-card__email {
-    font-size: 0.84rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0;
 }
 
-/* 5. Botones de Acción Internos */
+/* Contenedor de Botones de Acción */
 .contact-card__actions {
     display: flex;
     align-items: center;
@@ -169,105 +200,108 @@
     flex-shrink: 0;
 }
 
+/* Estilo Base de Botones de las Tarjetas */
 .contact-card__btn {
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 8px 14px;
+    border: 1px solid var(--border-light);
+    padding: 6px 14px;
     border-radius: 6px;
-    border: 1px solid transparent;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    background-color: #ffffff;
+    color: var(--text-main);
+    transition: all 0.15s ease;
+    white-space: nowrap;
 }
 
-/* Botón Iniciar Chat */
+/* Variación: Aceptar Solicitud */
+.contact-card__btn--accept {
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+.contact-card__btn--accept:hover {
+    background-color: var(--success-hover);
+}
+
+/* Variación: Rechazar Solicitud */
+.contact-card__btn--reject {
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+.contact-card__btn--reject:hover {
+    background-color: var(--danger-hover);
+}
+
+/* Variación: Iniciar Chat Privado */
 .contact-card__btn--chat {
-    background-color: var(--bg-app);
-    color: var(--purple-brand);
-    border-color: var(--border-light);
+    background-color: var(--purple-primary);
+    color: #ffffff;
+    border-color: var(--purple-primary);
 }
-
 .contact-card__btn--chat:hover {
-    background-color: var(--purple-brand);
-    color: var(--white);
-    border-color: var(--purple-brand);
+    background-color: var(--purple-hover);
+    border-color: var(--purple-hover);
 }
 
-/* Botón Eliminar Contacto */
+/* Variación: Eliminar Contacto */
 .contact-card__btn--delete {
-    background: transparent;
     color: var(--text-muted);
 }
-
 .contact-card__btn--delete:hover {
-    background-color: #fce8ee;
-    color: #e01e5a;
-}
-
-/* Botón Aceptar Solicitud */
-.contact-card__btn--accept {
-    background-color: #2bac76;
-    color: var(--white);
-}
-
-.contact-card__btn--accept:hover {
-    background-color: #249262;
-}
-
-/* Botón Rechazar Solicitud */
-.contact-card__btn--reject {
-    background-color: var(--bg-app);
-    color: var(--text-main);
-    border-color: var(--border-light);
-}
-
-.contact-card__btn--reject:hover {
-    background-color: #f8f8f8;
-    color: #e01e5a;
-    border-color: #f7b3c6;
-}
-
-.contact-card__btn:active {
-    transform: scale(0.96);
+    background-color: var(--danger-hover);
+    color: var(--danger-color);
+    border-color: rgba(224, 30, 90, 0.2);
 }
 
 /* ==========================================================================
-   📱 RESPONSIVE - Vista móvil fluida
+   Comportamiento Responsive Limpio (Mobile & Tablet)
    ========================================================================== */
-@media (max-width: 650px) {
-    /* El input de agregar contacto ocupa filas verticales */
+@media (max-width: 768px) {
+    .contact-panel {
+        padding: 16px;
+    }
+    
+    /* Deja margen para que la hamburguesa del sidebar móvil no tape el título */
+    .contact-panel__header {
+        padding-left: 56px;
+        padding-top: 4px;
+    }
+
+    /* Formulario pasa de horizontal a vertical ocupando todo el ancho */
     .contact-panel__add {
         flex-direction: column;
-        gap: 8px;
+        align-items: stretch;
+        gap: 10px;
         padding: 12px;
     }
 
     .contact-panel__input,
     .contact-panel__add-btn {
         width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .contact-panel__add-btn {
+        text-align: center;
+        padding: 10px;
     }
 
-    /* Las tarjetas distribuyen las acciones abajo */
+    /* Las tarjetas se reestructuran para acomodar mejor múltiples botones */
     .contact-card {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-        padding: 16px;
-    }
-
-    .contact-card__info {
-        width: 100%;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px;
     }
 
     .contact-card__actions {
-        width: 100%;
-        border-top: 1px solid var(--border-light);
-        padding-top: 12px;
         justify-content: flex-end;
+        border-top: 1px solid var(--border-light);
+        padding-top: 10px;
     }
-
+    
     .contact-card__btn {
-        flex-grow: 1;
+        flex: 1; /* Los botones toman un tamaño proporcional en móviles */
         text-align: center;
-        justify-content: center;
     }
 }

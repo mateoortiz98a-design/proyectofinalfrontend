@@ -1,154 +1,132 @@
 /* ==========================================================================
-   🛠️ SIDEBAR COMPONENT - MiSlack Premium Style
+   Variables de Paleta de Color de Slack
    ========================================================================== */
-
-/* 1. Botón Hamburguesa Móvil (Oculto en Escritorio) */
-.sidebar__toggle {
-    display: none;
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 999;
-    background-color: var(--purple-sidebar);
-    color: var(--white);
-    border: none;
-    padding: 10px 14px;
-    border-radius: var(--radius-md);
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: background-color 0.2s ease;
+:root {
+    --slack-bg: #1e122b;
+    --slack-active-bg: #351c4d;
+    --slack-hover-bg: rgba(255, 255, 255, 0.06);
+    --slack-text-primary: #ffffff;
+    --slack-text-muted: #bcabbc;
+    --slack-purple-accent: #611f69;
+    --slack-purple-hover: #4a154b;
+    --slack-danger: #e01e5a;
+    --slack-success: #2bac76;
+    --slack-border: rgba(255, 255, 255, 0.1);
 }
 
-.sidebar__toggle:hover {
-    background-color: var(--purple-brand);
-}
-
-/* 2. Overlay de fondo cuando se abre en móviles */
-.sidebar__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px);
-    z-index: 990;
-    animation: fadeIn 0.2s ease;
-}
-
-/* 3. Contenedor Principal Sidebar */
+/* ==========================================================================
+   Estructura Principal del Sidebar (Desktop por defecto)
+   ========================================================================== */
 .sidebar {
-    width: 260px;
+    width: 280px;
     height: 100vh;
-    background-color: var(--purple-sidebar);
-    color: rgba(255, 255, 255, 0.85);
+    background-color: var(--slack-bg);
+    color: var(--slack-text-primary);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid var(--slack-border);
+    padding: 16px 0;
+    box-sizing: border-box;
     overflow-y: auto;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 995;
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
 }
 
-/* 4. Header de la App */
+/* Scrollbar estilizada y sutil */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+/* Header de la App */
 .sidebar__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 20px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    position: sticky;
-    top: 0;
-    background-color: var(--purple-sidebar);
-    z-index: 2;
+    justify-content: space-between;
+    padding: 0 16px 16px 16px;
+    border-bottom: 1px solid var(--slack-border);
+    margin-bottom: 16px;
 }
 
 .sidebar__title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--white);
-    letter-spacing: -0.4px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }
 
 .sidebar__logout {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     border: none;
-    color: var(--white);
-    padding: 8px;
-    border-radius: 50%;
+    font-size: 1.2rem;
     cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease, transform 0.1s ease;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
 }
-
 .sidebar__logout:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background-color: var(--slack-hover-bg);
 }
 
-.sidebar__logout:active {
-    transform: scale(0.92);
-}
-
-/* 5. Secciones (Workspaces, Canales, Directos) */
+/* ==========================================================================
+   Secciones y Listas Internas
+   ========================================================================== */
 .sidebar__section {
-    padding: 16px 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 0 8px;
+    margin-bottom: 24px;
 }
 
 .sidebar__section-title {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--slack-text-muted);
+    padding: 0 12px;
     margin-bottom: 8px;
-    padding-left: 8px;
+    letter-spacing: 0.5px;
 }
 
-/* 6. List Items (Filas interactivas) */
+/* Ítems individuales de Listas (Canales, Workspaces, DMs) */
 .sidebar__item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    justify-content: space-between;
+    padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
-    margin-bottom: 2px;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    font-size: 0.92rem;
+    color: var(--slack-text-muted);
+    transition: background 0.15s, color 0.15s;
+    group-hover: filter;
 }
 
 .sidebar__item:hover {
-    background-color: rgba(255, 255, 255, 0.06);
-    color: var(--white);
+    background-color: var(--slack-hover-bg);
+    color: var(--slack-text-primary);
 }
 
-/* Estado Activo / Seleccionado Premium */
 .sidebar__item--active {
-    background-color: var(--purple-accent) !important;
-    color: var(--white) !important;
+    background-color: var(--slack-active-bg) !important;
+    color: var(--slack-text-primary) !important;
     font-weight: 600;
 }
 
 .sidebar__item-name {
-    flex-grow: 1;
-    font-size: 0.92rem;
+    flex: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 8px;
 }
 
-/* Botones de acción (Eliminar/Editar ocultos por defecto, aparecen en Hover) */
+/* Acciones ocultas que aparecen en Hover (Editar / Borrar) */
 .sidebar__item-actions {
     display: flex;
     gap: 4px;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.15s ease;
 }
 
 .sidebar__item:hover .sidebar__item-actions {
@@ -156,136 +134,144 @@
 }
 
 .sidebar__icon-btn {
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 0.85rem;
-    padding: 2px;
+    padding: 2px 4px;
     border-radius: 4px;
-    transition: background-color 0.2s ease;
+    font-size: 0.85rem;
+    transition: transform 0.1s;
 }
-
 .sidebar__icon-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.15);
 }
 
-/* 7. Inputs y Formularios de creación */
-.sidebar__new-row, .sidebar__edit-row {
+/* ==========================================================================
+   Formularios, Inputs y Botones de Creación
+   ========================================================================== */
+.sidebar__new-row {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-top: 8px;
-    padding: 0 8px;
-}
-
-.sidebar__edit-row {
-    flex-direction: row;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px;
-    border-radius: 6px;
+    padding: 8px 12px 4px 12px;
 }
 
 .sidebar__input, .sidebar__edit-input {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--white);
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.88rem;
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: #ffffff;
+    font-size: 0.85rem;
     outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.sidebar__input::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+    box-sizing: border-box;
+    transition: border-color 0.2s;
 }
 
 .sidebar__input:focus, .sidebar__edit-input:focus {
     border-color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Botones de creación */
+.sidebar__input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Edición inline de Workspace */
+.sidebar__edit-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+}
+
+/* Botones estándar del sidebar */
 .sidebar__btn {
+    background-color: transparent;
+    border: none;
+    color: var(--slack-text-muted);
+    font-size: 0.88rem;
+    text-align: left;
+    padding: 6px 12px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    padding: 8px;
     border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
+    justify-content: space-between;
+    transition: background 0.15s, color 0.15s;
 }
 
 .sidebar__btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: var(--white);
-    border-style: solid;
+    background-color: var(--slack-hover-bg);
+    color: var(--slack-text-primary);
 }
 
-/* Botón especial de Contactos con Badge */
+/* Botón especial de contactos con Badge de notificaciones */
 .sidebar__btn--contacts {
-    background: transparent;
-    border: none;
-    justify-content: space-between;
-    padding: 8px 12px;
-    font-size: 0.92rem;
-}
-
-.sidebar__btn--contacts:hover {
-    background-color: rgba(255, 255, 255, 0.06);
-    border: none;
+    font-weight: 500;
 }
 
 .sidebar__badge {
-    background-color: #e01e5a; /* Color de notificaciones oficial de Slack */
-    color: var(--white);
+    background-color: var(--slack-danger);
+    color: #ffffff;
     font-size: 0.75rem;
-    font-weight: 700;
-    padding: 2px 8px;
+    font-weight: bold;
+    padding: 2px 6px;
     border-radius: 10px;
-    animation: pulse 2s infinite;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-    100% { transform: scale(1); }
+    line-height: 1;
 }
 
 /* ==========================================================================
-   📱 MOBILE RESPONSIVE LAYOUT
+   Comportamiento Altamente Responsivo (Mobile & Tablet)
    ========================================================================== */
+
+/* Botón de hamburguesa para móviles */
+.sidebar__toggle {
+    display: none; /* Oculto en Computadoras */
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 101;
+    background-color: var(--slack-bg);
+    color: #ffffff;
+    border: 1px solid var(--slack-border);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Fondo oscuro difuminado al abrirse en móvil */
+.sidebar__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 99;
+}
+
+/* Reglas de quiebre de pantalla (Mobile) */
 @media (max-width: 768px) {
     .sidebar__toggle {
-        display: block; /* Muestra el botón hamburguesa */
+        display: block; /* Muestra la hamburguesa en móvil */
     }
 
     .sidebar {
         position: fixed;
         top: 0;
         left: 0;
-        transform: translateX(-100%); /* Escondido por defecto a la izquierda */
-        box-shadow: none;
+        transform: translateX(-100%); /* Esconde el menú a la izquierda */
+        width: 260px;
     }
 
-    /* Clase activa que inyecta tu JS cuando cambias el estado */
+    /* Clase activa que inyecta tu lógica JSX `sidebar--open` */
     .sidebar--open {
-        transform: translateX(0); /* Despliega el menú fluidamente */
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+        transform: translateX(0); /* Lo desliza suavemente a la pantalla */
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
     }
 }
