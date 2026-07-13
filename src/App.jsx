@@ -7,7 +7,7 @@ import { HomeScreen } from './Screens/HomeScreen/HomeScreen'
 import { ProfileScreen } from './Screens/ProfileScreen/ProfileScreen'
 import { ForgotPasswordScreen } from './Screens/ForgotPasswordScreen/ForgotPasswordScreen'
 import { ResetPasswordScreen } from './Screens/ResetPasswordScreen/ResetPasswordScreen'
-
+import './App.css'
 function isAuthenticated() {
     return !!localStorage.getItem('access_token')
 }
