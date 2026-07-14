@@ -1,6 +1,4 @@
-/* ==========================================================================
-   VerifyScreen - Estilos base alineados a MiSlack
-   ========================================================================== */
+
 
 .verify-screen {
     display: flex;
@@ -9,8 +7,8 @@
     min-height: 100vh;
     width: 100vw;
     /* Clonamos el degradado violeta moderno de tu Login */
-    background: radial-gradient(circle at 10% 20%, rgba(132, 60, 243, 0.6) 0%, rgba(255, 255, 255, 0.9) 80%),
-                radial-gradient(circle at 90% 80%, rgba(97, 24, 192, 0.8) 0%, rgba(240, 235, 250, 1) 100%);
+    background: radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.6) 0%, rgba(255, 255, 255, 0.9) 80%),
+                radial-gradient(circle at 90% 80%, rgba(108, 92, 231, 0.8) 0%, rgba(236, 233, 252, 1) 100%);
     background-size: cover;
     padding: 20px;
     box-sizing: border-box;
@@ -75,7 +73,7 @@
 .verify-card__btn {
     display: block;
     width: 100%;
-    background-color: #611f69; /* Violeta Slack corporativo */
+    background-color: #6c5ce7; /* Violeta Slack corporativo */
     color: #ffffff;
     padding: 12px 24px;
     border: none;
@@ -89,11 +87,11 @@
 }
 
 .verify-card__btn:hover {
-    background-color: #4a154b;
+    background-color: #5b4bd1;
 }
 
 .verify-card__link {
-    color: #611f69;
+    color: #6c5ce7;
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;

@@ -9,13 +9,13 @@
     --chat-border: #e2e2e2;
     
     /* Burbujas de chat */
-    --bubble-mine-bg: #f2e6f5; /* Tono morado muy suave para tus mensajes */
+    --bubble-mine-bg: #ece9fc; /* Tono morado muy suave para tus mensajes */
     --bubble-other-bg: #f4f5f7; /* Gris sutil para los del contacto */
     
     /* Acciones y Botones */
-    --purple-primary: #611f69;
-    --purple-hover: #4a154b;
-    --danger-color: #e01e5a;
+    --purple-primary: #6c5ce7;
+    --purple-hover: #5b4bd1;
+    --danger-color: #e0245e;
 }
 
 /* ==========================================================================

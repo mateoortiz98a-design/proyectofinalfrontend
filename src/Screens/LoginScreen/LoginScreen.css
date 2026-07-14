@@ -5,8 +5,8 @@
     align-items:center;
     padding:30px;
     background:
-    radial-gradient(circle at top left,#7c3aed 0%,transparent 35%),
-    radial-gradient(circle at bottom right,#5b21b6 0%,transparent 35%),
+    radial-gradient(circle at top left,#6c5ce7 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#5b4bd1 0%,transparent 35%),
     #eef2ff;
     font-family:'Segoe UI',sans-serif;
 }
@@ -94,8 +94,8 @@
 }
 
 .login-card__input:focus{
-    border-color:#7c3aed;
-    box-shadow:0 0 0 4px rgba(124,58,237,.15);
+    border-color:#6c5ce7;
+    box-shadow:0 0 0 4px rgba(108, 92, 231,.15);
 }
 
 /* BOTON */
@@ -105,7 +105,7 @@
     border:none;
     border-radius:14px;
     padding:15px;
-    background:linear-gradient(135deg,#7c3aed,#5b21b6);
+    background:linear-gradient(135deg,#6c5ce7,#5b4bd1);
     color:white;
     font-size:16px;
     font-weight:600;
@@ -115,7 +115,7 @@
 
 .login-card__btn:hover{
     transform:translateY(-2px);
-    box-shadow:0 12px 28px rgba(124,58,237,.30);
+    box-shadow:0 12px 28px rgba(108, 92, 231,.30);
 }
 
 /* FOOTER */
@@ -128,7 +128,7 @@
 }
 
 .login-card__link{
-    color:#7c3aed;
+    color:#6c5ce7;
     text-decoration:none;
     font-weight:600;
 }

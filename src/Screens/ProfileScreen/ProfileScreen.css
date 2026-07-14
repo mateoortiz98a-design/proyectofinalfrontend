@@ -1,6 +1,3 @@
-/* ==========================================================================
-   Contenedor de la Pantalla de Perfil
-   ========================================================================== */
 .profile-screen {
     display: flex;
     align-items: center;
@@ -46,7 +43,7 @@
 .profile-card__avatar {
     width: 80px;
     height: 80px;
-    background-color: #611f69; /* Morado Slack corporativo */
+    background-color: #6c5ce7; /* Morado Slack corporativo */
     color: #ffffff;
     font-size: 2.2rem;
     font-weight: 700;
@@ -55,7 +52,7 @@
     justify-content: center;
     border-radius: 50%;
     margin-bottom: 16px;
-    box-shadow: 0 2px 6px rgba(97, 31, 105, 0.2);
+    box-shadow: 0 2px 6px rgba(108, 92, 231, 0.2);
 }
 
 .profile-card__name {
@@ -127,26 +124,26 @@
 
 /* Botón Cerrar Sesión */
 .profile-card__btn--logout {
-    background-color: #611f69;
+    background-color: #6c5ce7;
     color: #ffffff;
 }
 
 .profile-card__btn--logout:hover {
-    background-color: #4a154b;
+    background-color: #5b4bd1;
 }
 
 /* Botón Eliminar Cuenta (Peligro) */
 .profile-card__btn--delete {
     background-color: #fff0f1;
-    color: #e01e5a;
+    color: #e0245e;
     border-color: #fbcfe8;
     margin-top: 8px; /* Separación visual de la zona de peligro */
 }
 
 .profile-card__btn--delete:hover:not(:disabled) {
-    background-color: #e01e5a;
+    background-color: #e0245e;
     color: #ffffff;
-    border-color: #e01e5a;
+    border-color: #e0245e;
 }
 
 /* ==========================================================================
@@ -182,7 +179,7 @@
 /* Ajuste específico para el botón de confirmar borrado real */
 .profile-card__confirm-actions .profile-card__btn--delete {
     margin-top: 0;
-    background-color: #e01e5a;
+    background-color: #e0245e;
     color: #ffffff;
 }
 

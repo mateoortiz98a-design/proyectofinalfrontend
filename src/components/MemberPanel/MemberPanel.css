@@ -8,12 +8,12 @@
     --border-light: #e2e2e2;
     
     /* Identidad Morada */
-    --purple-primary: #611f69;
-    --purple-hover: #4a154b;
-    --purple-light: #f2e6f5;
+    --purple-primary: #6c5ce7;
+    --purple-hover: #5b4bd1;
+    --purple-light: #ece9fc;
     
     /* Estados */
-    --danger-color: #e01e5a;
+    --danger-color: #e0245e;
     --danger-hover: #fce8ef;
 }
 
@@ -228,7 +228,7 @@
 
 .member-card__delete-btn:hover {
     background-color: var(--danger-hover);
-    border-color: rgba(224, 30, 90, 0.2);
+    border-color: rgba(224, 36, 94, 0.2);
 }
 
 /* ==========================================================================

@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 30px;
-    background: linear-gradient(135deg,#3f0e40,#611f69,#1264a3);
+    background: linear-gradient(135deg,#2b1a52,#6c5ce7,#3730a3);
     background-size: 300% 300%;
     animation: gradientMove 12s ease infinite;
     font-family: "Segoe UI", sans-serif;
@@ -46,7 +46,7 @@
 .register-card__logo{
     font-size:2rem;
     font-weight:800;
-    color:#3f0e40;
+    color:#2b1a52;
     margin-bottom:8px;
 }
 
@@ -99,8 +99,8 @@
 }
 
 .register-card__input:focus{
-    border-color:#611f69;
-    box-shadow:0 0 0 4px rgba(97,31,105,.15);
+    border-color:#6c5ce7;
+    box-shadow:0 0 0 4px rgba(108, 92, 231,.15);
 }
 
 .register-card__btn{
@@ -108,7 +108,7 @@
     border:none;
     border-radius:12px;
     padding:15px;
-    background:linear-gradient(135deg,#611f69,#3f0e40);
+    background:linear-gradient(135deg,#6c5ce7,#2b1a52);
     color:white;
     font-weight:700;
     font-size:1rem;
@@ -118,7 +118,7 @@
 
 .register-card__btn:hover{
     transform:translateY(-2px);
-    box-shadow:0 12px 25px rgba(63,14,64,.35);
+    box-shadow:0 12px 25px rgba(43, 26, 82,.35);
 }
 
 .register-card__btn:active{
@@ -132,7 +132,7 @@
 }
 
 .register-card__link{
-    color:#611f69;
+    color:#6c5ce7;
     font-weight:700;
     text-decoration:none;
 }

@@ -8,14 +8,14 @@
     --border-light: #e2e2e2;
     
     /* Identidad de Marca */
-    --purple-primary: #611f69;
-    --purple-hover: #4a154b;
-    --purple-light: #f2e6f5;
+    --purple-primary: #6c5ce7;
+    --purple-hover: #5b4bd1;
+    --purple-light: #ece9fc;
     
     /* Estados y Botones alternativos */
     --success-color: #2bac76;
     --success-hover: #eaf6f0;
-    --danger-color: #e01e5a;
+    --danger-color: #e0245e;
     --danger-hover: #fce8ef;
 }
 
@@ -106,7 +106,7 @@
 .contact-panel__pending {
     margin-bottom: 28px;
     background-color: #fffbfa; /* Un fondo cálido muy sutil para destacar pendientes */
-    border: 1px dashed rgba(224, 30, 90, 0.25);
+    border: 1px dashed rgba(224, 36, 94, 0.25);
     padding: 16px;
     border-radius: 8px;
 }
@@ -250,7 +250,7 @@
 .contact-card__btn--delete:hover {
     background-color: var(--danger-hover);
     color: var(--danger-color);
-    border-color: rgba(224, 30, 90, 0.2);
+    border-color: rgba(224, 36, 94, 0.2);
 }
 
 /* ==========================================================================
