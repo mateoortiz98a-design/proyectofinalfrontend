@@ -1,38 +1,38 @@
 /* ==========================================================================
-   Variables de Paleta de Color de Slack
+   Variables de Paleta de Color (estilo MiSlack de referencia)
    ========================================================================== */
 :root {
-    --slack-bg: #1e122b;
-    --slack-active-bg: #351c4d;
+    --slack-bg: #171223;
+    --slack-bg-soft: #1d1730;
+    --slack-active-bg: #4b3b80;
     --slack-hover-bg: rgba(255, 255, 255, 0.06);
     --slack-text-primary: #ffffff;
-    --slack-text-muted: #bcabbc;
-    --slack-purple-accent: #611f69;
-    --slack-purple-hover: #4a154b;
-    --slack-danger: #e01e5a;
+    --slack-text-muted: #a79ec2;
+    --slack-purple-accent: #6c5ce7;
+    --slack-purple-hover: #5b4bd1;
+    --slack-danger: #e0245e;
     --slack-success: #2bac76;
-    --slack-border: rgba(255, 255, 255, 0.1);
+    --slack-border: rgba(255, 255, 255, 0.08);
 }
 
 /* ==========================================================================
    Estructura Principal del Sidebar (Desktop por defecto)
    ========================================================================== */
 .sidebar {
-    width: 280px;
+    width: 290px;
+    min-width: 290px;
     height: 100%;
     background-color: var(--slack-bg);
     color: var(--slack-text-primary);
     display: flex;
     flex-direction: column;
     border-right: 1px solid var(--slack-border);
-    padding: 16px 0;
     box-sizing: border-box;
     overflow-y: auto;
     transition: transform 0.3s ease-in-out;
     z-index: 100;
 }
 
-/* Scrollbar estilizada y sutil */
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
@@ -41,65 +41,207 @@
     border-radius: 4px;
 }
 
-/* Header de la App */
+/* ==========================================================================
+   Header (logo + nombre app)
+   ========================================================================== */
 .sidebar__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 16px 16px 16px;
-    border-bottom: 1px solid var(--slack-border);
-    margin-bottom: 16px;
+    gap: 10px;
+    padding: 18px 20px;
+    flex-shrink: 0;
+}
+
+.sidebar__logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: var(--slack-purple-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
 .sidebar__title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: -0.3px;
 }
 
-.sidebar__logout {
+/* ==========================================================================
+   Navegación principal (Inicio / DMs / Contactos / Notificaciones)
+   ========================================================================== */
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 12px;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.sidebar__nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
     background: transparent;
     border: none;
-    font-size: 1.2rem;
+    color: var(--slack-text-muted);
+    font-size: 0.94rem;
+    font-weight: 500;
+    padding: 9px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 6px;
-    border-radius: 6px;
-    transition: background 0.2s;
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
 }
-.sidebar__logout:hover {
+
+.sidebar__nav-item:hover {
     background-color: var(--slack-hover-bg);
+    color: var(--slack-text-primary);
+}
+
+.sidebar__nav-item--active {
+    background-color: var(--slack-active-bg);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.sidebar__nav-icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    display: flex;
+}
+.sidebar__nav-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar__nav-chevron {
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.sidebar__nav-chevron svg { width: 100%; height: 100%; }
+.sidebar__nav-chevron--open {
+    transform: rotate(90deg);
+}
+
+/* Contenido anidado desplegable (DMs, Notificaciones, Canales) */
+.sidebar__nested {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 2px 4px 8px 30px;
+    animation: sidebarFadeIn 0.15s ease-out;
+}
+
+.sidebar__nested--channels {
+    padding-left: 46px;
+    padding-right: 4px;
+}
+
+@keyframes sidebarFadeIn {
+    from { opacity: 0; transform: translateY(-2px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar__empty-hint {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    font-style: italic;
 }
 
 /* ==========================================================================
-   Secciones y Listas Internas
+   Secciones (Workspaces)
    ========================================================================== */
 .sidebar__section {
-    padding: 0 8px;
-    margin-bottom: 24px;
+    padding: 8px 12px 16px 12px;
 }
 
-.sidebar__section-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--slack-text-muted);
-    padding: 0 12px;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-}
-
-/* Ítems individuales de Listas (Canales, Workspaces, DMs) */
-.sidebar__item {
+.sidebar__section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 12px;
+    padding: 8px 8px 8px 12px;
+}
+
+.sidebar__section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--slack-text-muted);
+    letter-spacing: 0.6px;
+}
+
+.sidebar__section-add {
+    background: transparent;
+    border: none;
+    color: var(--slack-text-muted);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.92rem;
+}
+.sidebar__section-add svg { width: 15px; height: 15px; }
+.sidebar__section-add:hover {
+    background-color: var(--slack-hover-bg);
+    color: #ffffff;
+}
+
+.sidebar__ws-block {
+    margin-bottom: 2px;
+}
+
+.sidebar__ws-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.sidebar__ws-row:hover {
+    background-color: var(--slack-hover-bg);
+}
+
+.sidebar__ws-row--active {
+    background-color: rgba(108, 92, 231, 0.16);
+}
+
+.sidebar__ws-row--active .sidebar__item-name {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   Ítems individuales (Canales, DMs)
+   ========================================================================== */
+.sidebar__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
     color: var(--slack-text-muted);
     transition: background 0.15s, color 0.15s;
-    group-hover: filter;
 }
 
 .sidebar__item:hover {
@@ -108,9 +250,31 @@
 }
 
 .sidebar__item--active {
-    background-color: var(--slack-active-bg) !important;
-    color: var(--slack-text-primary) !important;
+    background-color: var(--slack-active-bg);
+    color: #ffffff !important;
     font-weight: 600;
+}
+
+.sidebar__hash {
+    width: 15px;
+    height: 15px;
+    opacity: 0.8;
+    flex-shrink: 0;
+    display: flex;
+}
+.sidebar__hash svg { width: 100%; height: 100%; }
+
+.sidebar__item-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 .sidebar__item-name {
@@ -118,18 +282,20 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 8px;
+    cursor: pointer;
 }
 
 /* Acciones ocultas que aparecen en Hover (Editar / Borrar) */
 .sidebar__item-actions {
     display: flex;
-    gap: 4px;
+    gap: 2px;
     opacity: 0;
     transition: opacity 0.15s ease;
+    flex-shrink: 0;
 }
 
-.sidebar__item:hover .sidebar__item-actions {
+.sidebar__item:hover .sidebar__item-actions,
+.sidebar__ws-row:hover .sidebar__item-actions {
     opacity: 1;
 }
 
@@ -137,13 +303,17 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    transition: transform 0.1s;
+    padding: 4px;
+    border-radius: 5px;
+    color: var(--slack-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.sidebar__icon-btn svg { width: 13px; height: 13px; }
 .sidebar__icon-btn:hover {
-    transform: scale(1.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -153,15 +323,15 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 8px 12px 4px 12px;
+    padding: 6px 8px;
 }
 
 .sidebar__input, .sidebar__edit-input {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px;
-    padding: 6px 10px;
+    border-radius: 6px;
+    padding: 7px 10px;
     color: #ffffff;
     font-size: 0.85rem;
     outline: none;
@@ -170,14 +340,13 @@
 }
 
 .sidebar__input:focus, .sidebar__edit-input:focus {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--slack-purple-accent);
 }
 
 .sidebar__input::placeholder {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Edición inline de Workspace */
 .sidebar__edit-row {
     display: flex;
     align-items: center;
@@ -185,50 +354,207 @@
     padding: 4px 8px;
 }
 
-/* Botones estándar del sidebar */
 .sidebar__btn {
     background-color: transparent;
     border: none;
     color: var(--slack-text-muted);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     text-align: left;
-    padding: 6px 12px;
+    padding: 7px 8px;
     width: 100%;
     border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;
     transition: background 0.15s, color 0.15s;
 }
+.sidebar__btn svg { width: 14px; height: 14px; }
 
-.sidebar__btn:hover {
+.sidebar__btn:hover, .sidebar__btn--active {
     background-color: var(--slack-hover-bg);
     color: var(--slack-text-primary);
 }
 
-/* Botón especial de contactos con Badge de notificaciones */
-.sidebar__btn--contacts {
-    font-weight: 500;
+.sidebar__btn--primary {
+    background-color: var(--slack-purple-accent);
+    color: #ffffff;
+    justify-content: center;
+    font-weight: 600;
+}
+.sidebar__btn--primary:hover {
+    background-color: var(--slack-purple-hover);
 }
 
+.sidebar__btn--ghost {
+    color: var(--slack-text-muted);
+}
+
+/* Badge de notificaciones */
 .sidebar__badge {
     background-color: var(--slack-danger);
     color: #ffffff;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: bold;
-    padding: 2px 6px;
+    padding: 1px 6px;
     border-radius: 10px;
-    line-height: 1;
+    line-height: 1.4;
+    margin-left: 4px;
 }
 
 /* ==========================================================================
-   Comportamiento Altamente Responsivo (Mobile & Tablet)
+   Tarjetas de Notificaciones (dentro del panel lateral)
    ========================================================================== */
+.sidebar__notif-card {
+    background-color: var(--slack-bg-soft);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 4px 0;
+    border-left: 3px solid var(--slack-purple-accent);
+}
 
-/* Botón de hamburguesa para móviles */
+.sidebar__notif-text {
+    font-size: 0.82rem;
+    color: var(--slack-text-primary);
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.sidebar__notif-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.sidebar__notif-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.sidebar__notif-btn svg { width: 11px; height: 11px; }
+
+.sidebar__notif-btn--accept {
+    background-color: var(--slack-success);
+    color: #ffffff;
+}
+.sidebar__notif-btn--accept:hover { opacity: 0.9; }
+
+.sidebar__notif-btn--reject {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--slack-text-muted);
+}
+.sidebar__notif-btn--reject:hover { color: #ffffff; }
+
+/* ==========================================================================
+   Footer / Usuario actual
+   ========================================================================== */
+.sidebar__footer {
+    margin-top: auto;
+    border-top: 1px solid var(--slack-border);
+    padding: 10px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.sidebar__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+}
+.sidebar__user:hover {
+    background-color: var(--slack-hover-bg);
+}
+
+.sidebar__user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar__user-name {
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar__user-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.74rem;
+    color: var(--slack-text-muted);
+}
+
+.sidebar__status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--slack-success);
+    display: inline-block;
+}
+
+.sidebar__user-dots {
+    width: 16px;
+    height: 16px;
+    color: var(--slack-text-muted);
+}
+
+.sidebar__user-menu {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 10px;
+    right: 10px;
+    background-color: var(--slack-bg-soft);
+    border: 1px solid var(--slack-border);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    z-index: 10;
+    animation: sidebarFadeIn 0.15s ease-out;
+}
+
+.sidebar__user-menu-item {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--slack-text-primary);
+    font-size: 0.85rem;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.sidebar__user-menu-item:hover {
+    background-color: var(--slack-hover-bg);
+}
+.sidebar__user-menu-item--danger {
+    color: var(--slack-danger);
+}
+
+/* ==========================================================================
+   Comportamiento Responsivo (Mobile & Tablet)
+   ========================================================================== */
 .sidebar__toggle {
-    display: none; /* Oculto en Computadoras */
+    display: none;
     position: fixed;
     top: 12px;
     left: 12px;
@@ -243,7 +569,6 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Fondo oscuro difuminado al abrirse en móvil */
 .sidebar__overlay {
     position: fixed;
     top: 0;
@@ -255,23 +580,22 @@
     z-index: 99;
 }
 
-/* Reglas de quiebre de pantalla (Mobile) */
 @media (max-width: 768px) {
     .sidebar__toggle {
-        display: block; /* Muestra la hamburguesa en móvil */
+        display: block;
     }
 
     .sidebar {
         position: fixed;
         top: 0;
         left: 0;
-        transform: translateX(-100%); /* Esconde el menú a la izquierda */
-        width: 260px;
+        transform: translateX(-100%);
+        width: 280px;
+        min-width: 280px;
     }
 
-    /* Clase activa que inyecta tu lógica JSX `sidebar--open` */
     .sidebar--open {
-        transform: translateX(0); /* Lo desliza suavemente a la pantalla */
+        transform: translateX(0);
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
     }
 }

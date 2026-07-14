@@ -15,7 +15,6 @@ import PrivateChatPanel from '../../components/PrivateChatPanel/PrivateChatPanel
 import MemberPanel from '../../components/MemberPanel/MemberPanel'
 import ContactPanel from '../../components/ContactPanel/ContactPanel'
 import './HomeScreen.css'
-import NotificationPanel from '../../components/NotificationPanel/NotificationPanel'
 
 function getUserFromToken() {
     const token = localStorage.getItem('access_token')
@@ -376,12 +375,6 @@ export const HomeScreen = () => {
     return (
         <div className="home-screen">
 
-            <NotificationPanel
-                notifications={notifications}
-                onAccept={handleAceptarInvitacion}
-                onReject={handleRechazarInvitacion}
-            />
-
             <Sidebar
                 workspaces={workspaces}
                 selectedWorkspace={selectedWorkspace}
@@ -427,6 +420,11 @@ export const HomeScreen = () => {
                 pendingRequests={pendingRequests}
                 onLogout={handleLogout}
                 onGoToProfile={handleGoToProfile}
+                notifications={notifications}
+                onAcceptNotification={handleAceptarInvitacion}
+                onRejectNotification={handleRechazarInvitacion}
+                showContacts={showContacts}
+                showMembers={showMembers}
             />
 
             <main className="home-screen__main">

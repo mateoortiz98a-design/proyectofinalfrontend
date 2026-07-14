@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './ChatPanel.css'
 
 function getUserFromToken() {
@@ -21,8 +21,31 @@ const ChatPanel = ({
 
     const currentUser = getUserFromToken()
 
+    const messagesContainerRef = useRef(null)
+    const messagesEndRef = useRef(null)
+    const isNearBottomRef = useRef(true)
+
+    const handleScroll = () => {
+        const el = messagesContainerRef.current
+        if (!el) return
+        const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight
+        isNearBottomRef.current = distanceFromBottom < 120
+    }
+
+    useEffect(() => {
+        if (isNearBottomRef.current) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }
+    }, [messages])
+
+    useEffect(() => {
+        isNearBottomRef.current = true
+        messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
+    }, [selectedChat?._id])
+
     const handleSend = () => {
         if (!nuevoMensaje.trim()) return
+        isNearBottomRef.current = true
         onSendMessage(nuevoMensaje)
         setNuevoMensaje('')
     }
@@ -50,7 +73,7 @@ const ChatPanel = ({
                 <h2># {selectedChat.nombre}</h2>
             </div>
 
-            <div className="chat-panel__messages">
+            <div className="chat-panel__messages" ref={messagesContainerRef} onScroll={handleScroll}>
                 {messages.length === 0
                     ? <p className="chat-panel__empty">No hay mensajes aún. ¡Sé el primero en escribir!</p>
                     : messages.map(msg => {
@@ -94,6 +117,7 @@ const ChatPanel = ({
                         )
                     })
                 }
+                <div ref={messagesEndRef} />
             </div>
 
             <div className="chat-panel__input-area">
