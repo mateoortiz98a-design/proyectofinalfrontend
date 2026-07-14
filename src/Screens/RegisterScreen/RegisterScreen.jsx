@@ -2,6 +2,7 @@ import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import useForm from '../../hooks/useForm'
+import '../../styles/auth.css'
 import './RegisterScreen.css'
 
 export const RegisterScreen = () => {
@@ -10,12 +11,16 @@ export const RegisterScreen = () => {
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
     const [emergencyLink, setEmergencyLink] = useState(null) // 🔥 Estado para el link de rescate
+    const [loading, setLoading] = useState(false)
 
     async function onSubmit(formData) {
         if (formData.password !== formData.confirmPassword) {
             setError('Las contraseñas no coinciden')
             return
         }
+
+        setError(null)
+        setLoading(true)
 
         try {
             const response = await fetch(`${BASE_URL}/api/auth/register`, {
@@ -43,6 +48,8 @@ export const RegisterScreen = () => {
             }
         } catch {
             setError('Error al conectar con el servidor')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -78,7 +85,7 @@ export const RegisterScreen = () => {
                             <a 
                                 href={emergencyLink} 
                                 style={{ 
-                                    color: '#3f0e40', 
+                                    color: '#6c5ce7', 
                                     fontWeight: 'bold', 
                                     textDecoration: 'underline',
                                     fontSize: '14px' 
@@ -99,7 +106,10 @@ export const RegisterScreen = () => {
         <div className="register-screen">
             <div className="register-card">
                 <div className="register-card__header">
-                    <h1 className="register-card__logo">💬 MiSlack</h1>
+                    <div className="auth-logo">
+                        <span className="auth-logo__badge">M</span>
+                        <span className="auth-logo__text">MiSlack</span>
+                    </div>
                     <h2 className="register-card__title">Crear cuenta</h2>
                     <p className="register-card__subtitle">Empezá a chatear con tu equipo</p>
                 </div>
@@ -117,6 +127,7 @@ export const RegisterScreen = () => {
                             placeholder="Tu nombre"
                             value={formState.name}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -131,6 +142,7 @@ export const RegisterScreen = () => {
                             placeholder="tu@email.com"
                             value={formState.email}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -145,6 +157,7 @@ export const RegisterScreen = () => {
                             placeholder="Mínimo 6 caracteres"
                             value={formState.password}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -159,17 +172,29 @@ export const RegisterScreen = () => {
                             placeholder="Repetí tu contraseña"
                             value={formState.confirmPassword}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
 
-                    <button type="submit" className="register-card__btn">Crear cuenta</button>
+                    <button type="submit" className="register-card__btn" disabled={loading}>
+                        {loading ? (<><span className="auth-spinner auth-spinner--btn" /> Creando cuenta...</>) : 'Crear cuenta'}
+                    </button>
                 </form>
 
                 <p className="register-card__footer">
                     ¿Ya tenés cuenta? <Link to="/login" className="register-card__link">Iniciá sesión</Link>
                 </p>
             </div>
+
+            {loading && (
+                <div className="auth-loading-overlay">
+                    <div className="auth-loading-box">
+                        <span className="auth-spinner" />
+                        <p>Creando tu cuenta...</p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

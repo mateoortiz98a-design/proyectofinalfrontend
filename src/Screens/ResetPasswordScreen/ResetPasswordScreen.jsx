@@ -2,6 +2,7 @@ import BASE_URL from '../../config.js'
 import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import useForm from '../../hooks/useForm'
+import '../../styles/auth.css'
 import './ResetPasswordScreen.css'
 
 export const ResetPasswordScreen = () => {
@@ -66,7 +67,10 @@ export const ResetPasswordScreen = () => {
         <div className="reset-screen">
             <div className="reset-card">
                 <div className="reset-card__header">
-                    <h1 className="reset-card__logo">💬 MiSlack</h1>
+                    <div className="auth-logo" style={{ justifyContent: 'center', width: '100%' }}>
+                        <span className="auth-logo__badge">M</span>
+                        <span className="auth-logo__text">MiSlack</span>
+                    </div>
                     <h2 className="reset-card__title">Nueva contraseña</h2>
                     <p className="reset-card__subtitle">Ingresá tu nueva contraseña</p>
                 </div>
@@ -84,6 +88,7 @@ export const ResetPasswordScreen = () => {
                             placeholder="Mínimo 6 caracteres"
                             value={formState.newPassword}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -97,14 +102,24 @@ export const ResetPasswordScreen = () => {
                             placeholder="Repetí tu contraseña"
                             value={formState.confirmPassword}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
                     <button type="submit" className="reset-card__btn" disabled={loading}>
-                        {loading ? 'Guardando...' : 'Cambiar contraseña'}
+                        {loading ? (<><span className="auth-spinner auth-spinner--btn" /> Guardando...</>) : 'Cambiar contraseña'}
                     </button>
                 </form>
             </div>
+
+            {loading && (
+                <div className="auth-loading-overlay">
+                    <div className="auth-loading-box">
+                        <span className="auth-spinner" />
+                        <p>Guardando tu nueva contraseña...</p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

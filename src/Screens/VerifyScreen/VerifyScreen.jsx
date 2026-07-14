@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router'
 import BASE_URL from '../../config.js'
+import '../../styles/auth.css'
 import './VerifyScreen.css' // 🔥 Vinculamos el nuevo archivo CSS modular
 
 export const VerifyScreen = () => {
@@ -42,12 +43,15 @@ export const VerifyScreen = () => {
         <div className="verify-screen">
             <div className="verify-card">
                 <div className="verify-card__header">
-                    <h1 className="verify-card__logo">💬 MiSlack</h1>
+                    <div className="auth-logo" style={{ justifyContent: 'center', width: '100%' }}>
+                        <span className="auth-logo__badge">M</span>
+                        <span className="auth-logo__text">MiSlack</span>
+                    </div>
                 </div>
 
                 {status === 'verifying' && (
                     <div className="verify-card__body">
-                        <div className="verify-card__spinner">⏳</div>
+                        <span className="auth-spinner" style={{ width: '40px', height: '40px', borderWidth: '4px', marginBottom: '15px' }} />
                         <h2 className="verify-card__title">Procesando...</h2>
                         <p className="verify-card__subtitle">{message}</p>
                     </div>
