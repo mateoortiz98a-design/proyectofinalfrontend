@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { getWorkspaces, createWorkspace, deleteWorkspace, updateWorkspace } from '../../services/workspaceService'
 import { getChatsByWorkspace, createChat, deleteChat } from '../../services/chatService'
 import { getMessages, sendMessage, deleteMessage, updateMessage } from '../../services/messageService'
-import { getMembers, inviteUser, removeMember, updateMemberRole } from '../../services/memberService'
+import { getMembers, inviteUser, removeMember, updateMemberRole, getPendingInvitations } from '../../services/memberService'
 import { getContacts, getPendingRequests, sendContactRequest, respondRequest, deleteContact } from '../../services/contactService'
 import { getMyPrivateChats, createPrivateChat, deletePrivateChat, getPrivateMessages, sendPrivateMessage, deletePrivateMessage, updatePrivateMessage } from '../../services/privateChatService'
 import { logout } from '../../services/authService'
@@ -50,7 +50,9 @@ export const HomeScreen = () => {
         socket.on('new_contact_request', () => cargarContactos())
         socket.on('contact_request_response', () => cargarContactos())
         socket.on('workspace_invitation', (invitation) => {
-            setNotifications(prev => [...prev, invitation])
+            setNotifications(prev =>
+                prev.some(n => n.member_id === invitation.member_id) ? prev : [...prev, invitation]
+            )
         })
         return () => {
             socket.off('new_contact_request')
@@ -94,6 +96,7 @@ export const HomeScreen = () => {
         cargarWorkspaces()
         cargarContactos()
         cargarChatsPrivados()
+        cargarInvitacionesPendientes()
     }, [])
 
     useEffect(() => {
@@ -169,6 +172,17 @@ export const HomeScreen = () => {
                 r => r.fk_sender_id !== null && r.fk_sender_id !== undefined
             )
             setPendingRequests(solicitudesValidas)
+        }
+    }
+
+    async function cargarInvitacionesPendientes() {
+        const response = await getPendingInvitations()
+        if (response.ok && response.data?.invitations) {
+            setNotifications(prev => {
+                const idsExistentes = new Set(prev.map(n => n.member_id))
+                const nuevas = response.data.invitations.filter(inv => !idsExistentes.has(inv.member_id))
+                return [...prev, ...nuevas]
+            })
         }
     }
 
@@ -270,8 +284,15 @@ export const HomeScreen = () => {
     async function handleIniciarChatPrivado(user_id) {
         const response = await createPrivateChat(user_id)
         if (response.ok) {
-            await cargarChatsPrivados()
-            setSelectedPrivateChat(response.chat)
+            const listado = await getMyPrivateChats()
+            if (listado.ok) {
+                setPrivateChats(listado.chats)
+                // Buscamos la versión ya populada (con el nombre del contacto) en vez del objeto crudo de la creación
+                const chatPoblado = listado.chats.find(c => c._id === response.chat._id) || response.chat
+                setSelectedPrivateChat(chatPoblado)
+            } else {
+                setSelectedPrivateChat(response.chat)
+            }
             setShowContacts(false)
             setShowMembers(false)
             setSelectedChat(null)
@@ -282,10 +303,16 @@ export const HomeScreen = () => {
 
     // Private chat handlers
     async function handleEliminarChatPrivado(chat_id) {
-        const response = await deletePrivateChat(chat_id)
-        if (response.ok) {
-            if (selectedPrivateChat?._id === chat_id) { setSelectedPrivateChat(null); setPrivateMessages([]) }
-            cargarChatsPrivados()
+        try {
+            const response = await deletePrivateChat(chat_id)
+            if (response.ok) {
+                if (selectedPrivateChat?._id === chat_id) { setSelectedPrivateChat(null); setPrivateMessages([]) }
+                cargarChatsPrivados()
+            } else {
+                alert(response.message || 'No se pudo eliminar el chat')
+            }
+        } catch {
+            alert('Error al conectar con el servidor')
         }
     }
 

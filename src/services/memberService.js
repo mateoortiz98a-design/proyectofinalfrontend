@@ -19,6 +19,13 @@ export async function getMembers(workspace_id) {
     return await response.json()
 }
 
+export async function getPendingInvitations() {
+    const response = await fetch(`${BASE_URL}/workspace/invitations/pending`, {
+        headers: { 'Authorization': `Bearer ${getToken()}` }
+    })
+    return await response.json()
+}
+
 export async function removeMember(workspace_id, member_id) {
     const response = await fetch(`${BASE_URL}/workspace/${workspace_id}/members/${member_id}`, {
         method: 'DELETE',
