@@ -38,6 +38,7 @@ const IconUsers = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentCol
 const IconCheck = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>)
 const IconX = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>)
 const IconDots = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="6" r="0.6" /><circle cx="12" cy="12" r="0.6" /><circle cx="12" cy="18" r="0.6" /></svg>)
+const IconLeave = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5" /><path d="M21 12H9" /></svg>)
 
 const Sidebar = ({
     workspaces,
@@ -46,6 +47,7 @@ const Sidebar = ({
     onCreateWorkspace,
     onDeleteWorkspace,
     onEditWorkspace,
+    onLeaveWorkspace,
     chats,
     selectedChat,
     onSelectChat,
@@ -98,6 +100,7 @@ const Sidebar = ({
     const irAInicio = () => {
         setDmOpen(false)
         setNotifOpen(false)
+        onSelectChat(null)
     }
 
     const resetFormulariosCanal = () => {
@@ -259,6 +262,17 @@ const Sidebar = ({
                                         <div className="sidebar__item-actions">
                                             <button className="sidebar__icon-btn" onClick={() => { setEditandoWorkspace(ws.workspace_id); setTextoEditWorkspace(ws.workspace_nombre) }}><IconEdit /></button>
                                             <button className="sidebar__icon-btn" onClick={() => onDeleteWorkspace(ws.workspace_id)}><IconTrash /></button>
+                                            <button
+                                                className="sidebar__icon-btn sidebar__icon-btn--leave"
+                                                title="Salir del workspace"
+                                                onClick={() => {
+                                                    if (window.confirm(`¿Seguro que querés salir de "${ws.workspace_nombre}"?`)) {
+                                                        onLeaveWorkspace(ws.workspace_id)
+                                                    }
+                                                }}
+                                            >
+                                                <IconLeave />
+                                            </button>
                                         </div>
                                         <span className={`sidebar__nav-chevron ${activo ? 'sidebar__nav-chevron--open' : ''}`} onClick={() => seleccionarWorkspace(ws)}>
                                             <IconChevron />

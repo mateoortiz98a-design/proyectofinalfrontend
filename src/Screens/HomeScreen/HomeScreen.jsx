@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { getWorkspaces, createWorkspace, deleteWorkspace, updateWorkspace } from '../../services/workspaceService'
 import { getChatsByWorkspace, createChat, deleteChat } from '../../services/chatService'
 import { getMessages, sendMessage, deleteMessage, updateMessage } from '../../services/messageService'
-import { getMembers, inviteUser, removeMember, updateMemberRole, getPendingInvitations } from '../../services/memberService'
+import { getMembers, inviteUser, removeMember, updateMemberRole, getPendingInvitations, leaveWorkspace } from '../../services/memberService'
 import { getContacts, getPendingRequests, sendContactRequest, respondRequest, deleteContact } from '../../services/contactService'
 import { getMyPrivateChats, createPrivateChat, deletePrivateChat, getPrivateMessages, sendPrivateMessage, deletePrivateMessage, updatePrivateMessage } from '../../services/privateChatService'
 import { logout } from '../../services/authService'
@@ -217,6 +217,18 @@ export const HomeScreen = () => {
         if (response.ok) cargarWorkspaces()
     }
 
+    async function handleSalirWorkspace(workspace_id) {
+        const response = await leaveWorkspace(workspace_id)
+        if (response.ok) {
+            if (selectedWorkspace?.workspace_id === workspace_id) {
+                setSelectedWorkspace(null); setChats([]); setMessages([])
+            }
+            cargarWorkspaces()
+        } else {
+            alert(response.message || 'No se pudo salir del espacio de trabajo')
+        }
+    }
+
     // Chat handlers
     async function handleCrearChat(nombre) {
         const response = await createChat(selectedWorkspace.workspace_id, nombre)
@@ -413,6 +425,7 @@ export const HomeScreen = () => {
                 onCreateWorkspace={handleCrearWorkspace}
                 onDeleteWorkspace={handleEliminarWorkspace}
                 onEditWorkspace={handleEditarWorkspace}
+                onLeaveWorkspace={handleSalirWorkspace}
                 chats={chats}
                 selectedChat={selectedChat}
                 onSelectChat={(chat) => {

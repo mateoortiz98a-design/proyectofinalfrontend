@@ -42,3 +42,11 @@ export async function updateMemberRole(workspace_id, member_id, role) {
     })
     return await response.json()
 }
+
+export async function leaveWorkspace(workspace_id) {
+    const response = await fetch(`${BASE_URL}/workspace/${workspace_id}/leave`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${getToken()}` }
+    })
+    return await response.json()
+}

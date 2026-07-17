@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Variables de Paleta de Color (estilo MiSlack de referencia)
-   ========================================================================== */
+
 :root {
     --slack-bg: #171223;
     --slack-bg-soft: #1d1730;
@@ -314,6 +312,11 @@
 .sidebar__icon-btn:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
+}
+
+.sidebar__icon-btn--leave:hover {
+    background-color: rgba(224, 36, 94, 0.18);
+    color: #e0245e;
 }
 
 /* ==========================================================================
