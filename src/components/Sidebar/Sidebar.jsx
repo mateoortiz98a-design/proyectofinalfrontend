@@ -76,6 +76,7 @@ const Sidebar = ({
     const [dmOpen, setDmOpen] = useState(false)
     const [notifOpen, setNotifOpen] = useState(false)
     const [userMenuOpen, setUserMenuOpen] = useState(false)
+    const [workspaceColapsado, setWorkspaceColapsado] = useState(false)
 
     const currentUser = getUserFromToken()
 
@@ -119,11 +120,19 @@ const Sidebar = ({
     }
 
     const seleccionarWorkspace = (ws) => {
+        const yaEstabaActivo = selectedWorkspace?.workspace_id === ws.workspace_id
+
+        if (yaEstabaActivo) {
+            // Ya estaba abierto: solo lo colapsamos/expandimos, sin recargar nada
+            setWorkspaceColapsado(c => !c)
+            return
+        }
+
         setDmOpen(false)
         setNotifOpen(false)
         resetFormulariosCanal()
+        setWorkspaceColapsado(false)
         onSelectWorkspace(ws)
-        closeSidebar()
     }
 
     return (
@@ -166,7 +175,7 @@ const Sidebar = ({
                                         <span className="sidebar__item-avatar" style={{ backgroundColor: colorFromId(chat._id) }}>
                                             {initialsFromName(nombreContacto)}
                                         </span>
-                                        <span className="sidebar__item-name" onClick={() => { onSelectPrivateChat(chat); closeSidebar() }}>
+                                        <span className="sidebar__item-name" onClick={() => onSelectPrivateChat(chat)}>
                                             {nombreContacto}
                                         </span>
                                         <div className="sidebar__item-actions">
@@ -178,7 +187,7 @@ const Sidebar = ({
                         </div>
                     )}
 
-                    <button className={`sidebar__nav-item ${showContacts ? 'sidebar__nav-item--active' : ''}`} onClick={() => { onShowContacts(); closeSidebar() }}>
+                    <button className={`sidebar__nav-item ${showContacts ? 'sidebar__nav-item--active' : ''}`} onClick={() => onShowContacts()}>
                         <span className="sidebar__nav-icon"><IconContacts /></span>
                         Contactos
                         {pendingRequests.length > 0 && <span className="sidebar__badge">{pendingRequests.length}</span>}
@@ -274,14 +283,14 @@ const Sidebar = ({
                                                 <IconLeave />
                                             </button>
                                         </div>
-                                        <span className={`sidebar__nav-chevron ${activo ? 'sidebar__nav-chevron--open' : ''}`} onClick={() => seleccionarWorkspace(ws)}>
+                                        <span className={`sidebar__nav-chevron ${activo && !workspaceColapsado ? 'sidebar__nav-chevron--open' : ''}`} onClick={() => seleccionarWorkspace(ws)}>
                                             <IconChevron />
                                         </span>
                                     </div>
                                 )}
 
                                 {/* Canales anidados dentro del workspace activo */}
-                                {activo && (
+                                {activo && !workspaceColapsado && (
                                     <div className="sidebar__nested sidebar__nested--channels">
                                         {chats.map(chat => (
                                             <div key={chat._id} className={`sidebar__item ${selectedChat?._id === chat._id ? 'sidebar__item--active' : ''}`}>
@@ -313,7 +322,7 @@ const Sidebar = ({
                                             </button>
                                         )}
 
-                                        <button className={`sidebar__btn sidebar__btn--ghost ${showMembers ? 'sidebar__btn--active' : ''}`} onClick={() => { onShowMembers(); closeSidebar() }}>
+                                        <button className={`sidebar__btn sidebar__btn--ghost ${showMembers ? 'sidebar__btn--active' : ''}`} onClick={() => onShowMembers()}>
                                             <IconUsers /> Miembros
                                         </button>
                                     </div>

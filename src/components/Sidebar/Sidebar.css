@@ -1,4 +1,6 @@
-
+/* ==========================================================================
+   Variables de Paleta de Color (estilo MiSlack de referencia)
+   ========================================================================== */
 :root {
     --slack-bg: #171223;
     --slack-bg-soft: #1d1730;
@@ -293,7 +295,9 @@
 }
 
 .sidebar__item:hover .sidebar__item-actions,
-.sidebar__ws-row:hover .sidebar__item-actions {
+.sidebar__ws-row:hover .sidebar__item-actions,
+.sidebar__ws-row--active .sidebar__item-actions,
+.sidebar__item--active .sidebar__item-actions {
     opacity: 1;
 }
 
